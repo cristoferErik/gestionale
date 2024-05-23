@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Web extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'web_id';
+    //protected $primaryKey = 'web_id';
 
     
     protected $fillable=
