@@ -19,8 +19,7 @@ class CustomerService implements CustomerServiceInterface{
     public function getCustomerPaginated(int $pagSize): LengthAwarePaginator{
         return $this->customerRepository->getPaginated($pagSize);
     }
-    public function createCustomer(Customer $data): ?Model{
-        $customer = new Customer();
+    public function createCustomer(Customer $customer): ?Model{
         return $this->customerRepository->create($customer->toArray());
     }
     public function updateCustomer(Customer $data): ?Model{

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name_cliente');
             $table->string('description')->nullable();
             $table->string('city')->nullable();
+            $table->string('email');
+            $table->string('address');
             $table->timestamps();
         });
     }

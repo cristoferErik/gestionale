@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 interface CustomerServiceInterface{
 
-    public function getCustomer(Customer $data): ?Model;
+    public function getCustomer(Customer $customer): ?Model;
     public function getCustomerPaginated(int $pagSize): LengthAwarePaginator;
-    public function createCustomer(Customer $data): ?Model;
-    public function updateCustomer(Customer $data): ?Model;
-    public function deleteCustomer(Customer $data): bool;
+    public function createCustomer(Customer $customer): ?Model;
+    public function updateCustomer(Customer $customer): ?Model;
+    public function deleteCustomer(Customer $customer): bool;
 }

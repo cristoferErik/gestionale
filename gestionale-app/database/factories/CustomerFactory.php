@@ -17,13 +17,14 @@ class CustomerFactory extends Factory
      */
     protected $model = Customer::class;
 
-
     public function definition(): array
     {
         return [
             'name_cliente' => $this->faker->name(),
-            'description' => $this->faker->paragraph,
-            'city' => $this->faker->city()
+            'description' => $this->faker->paragraph(),
+            'city' => $this->faker->city(),
+            'email'=>$this->faker->email(),
+            'address'=>$this->faker->address()
         ];
     }
 }
