@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Web extends Model
+class ServiceWeb extends Model
 {
     use HasFactory;
     //protected $primaryKey = 'web_id';
@@ -18,12 +18,13 @@ class Web extends Model
         'ultimo_bk',
         'scadenza',
         'gestito',
+        'service_id',
     ];
 
     public function service(){
-        return $this->belongsTo(Service::class, 'service_id');
+        return $this->belongsTo(Service::class);
     }
     public function server(){
-        return $this->hasMany(Server::class,'web_id' );
+        return $this->hasMany(Server::class);
     }
 }

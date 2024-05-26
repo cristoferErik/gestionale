@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 interface CrudRepositoryInterface
 {
-    public function find(array $data);
+    public function find(int $id);
     public function getPaginated(int $pagSize): LengthAwarePaginator;
     public function create(array $data):?Model;
     public function insert(array $data):bool;
-    public function update(array $data): ?Model;
+    public function update(array $data,int $id): ?Model;
     public function delete(array $data):bool;
 
 

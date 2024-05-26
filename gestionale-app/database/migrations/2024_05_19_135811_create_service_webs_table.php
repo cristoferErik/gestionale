@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('webs', function (Blueprint $table) {
+        Schema::create('service_webs', function (Blueprint $table) {
 
             $table->id();
             $table->float('costo_annuale');
@@ -19,9 +19,8 @@ return new class extends Migration
             $table->dateTime('ultimo_bk');
             $table->dateTime('scadenza');
             $table->string('gestito');
-
+            /*foreign key*/
             $table->unsignedBigInteger('service_id');
-
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
 
             $table->timestamps();
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('webs');
+        Schema::dropIfExists('service_webs');
     }
 };

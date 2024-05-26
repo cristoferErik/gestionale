@@ -5,6 +5,7 @@ use App\Models\Customer;
 use App\Repositories\CustomerRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class CustomerService implements CustomerServiceInterface{
     //iniettiamo la dipendenza
@@ -14,7 +15,7 @@ class CustomerService implements CustomerServiceInterface{
         $this->customerRepository=$customerRepository;
     }
     public function getCustomer(Customer $data): ?Model{
-        return $this->customerRepository->find($data->toArray());
+        return $this->customerRepository->find($data->id);
     }
     public function getCustomerPaginated(int $pagSize): LengthAwarePaginator{
         return $this->customerRepository->getPaginated($pagSize);
@@ -22,13 +23,11 @@ class CustomerService implements CustomerServiceInterface{
     public function createCustomer(Customer $customer): ?Model{
         return $this->customerRepository->create($customer->toArray());
     }
-    public function updateCustomer(Customer $data): ?Model{
-        $customer= $this->getCustomer($data["id"]);
-        $customer=Customer::fromArray($data);
-        return $this->customerRepository->update($customer->toArray());
+    public function updateCustomer(Customer $data , int $id):?Model{
+        return $this->customerRepository->update($data->toArray(),$id);
     }
     public function deleteCustomer(Customer $data): bool{
-        $customer = $this->getCustomer($data["id"]);
+        $customer = $this->getCustomer($data->id);
         if($customer==null){
             return null;
         }

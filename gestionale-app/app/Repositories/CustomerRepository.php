@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Validator;
 class CustomerRepository implements CrudRepositoryInterface{
 
 
-    public function find(array $data): ?Model
+    public function find(int $id): ?Model
     {
-        return Customer::where($data)->first();
+        return Customer::find($id);
     }
 
     public function getPaginated(int $pagSize): LengthAwarePaginator
@@ -31,9 +31,9 @@ class CustomerRepository implements CrudRepositoryInterface{
         return Customer::insert($data);
     }
 
-    public function update(array $data): ?Model
+    public function update(array $data, int $id): ?Model
     {
-        $customer = $this->find(['id' => $data['id']]);
+        $customer = $this->find($id);
         if ($customer) {
             $customer->update($data);
             return $customer;
@@ -43,7 +43,7 @@ class CustomerRepository implements CrudRepositoryInterface{
 
     public function delete(array $data): bool
     {
-        $customer = $this->find(['id' => $data['id']]);
+        $customer = $this->find($data["id"]);
         if ($customer) {
             return $customer->delete();
         }

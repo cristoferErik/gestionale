@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest\StoreCustomerRequest;
+use App\Http\Requests\CustomerRequest\UpdateCustomerRequest;
 use App\Http\Resources\CustomerResources\CustomerCollection;
 use App\Http\Resources\CustomerResources\CustomerResource;
 use App\Models\Customer;
@@ -26,5 +27,12 @@ class CustomerController extends Controller
         $customer= new Customer();
         $customer->fill($request->all());
         return new CustomerResource($this->customerService->createCustomer($customer));
+    }
+    public function update(UpdateCustomerRequest $request, Customer $customer){
+        //La variable $request, ottiene tutti i dati senza il id, e verifica che siano corretti
+        //$customer, prende tutti i dati compresso il Id
+        $customerUpdate = new Customer();
+        $customerUpdate->fill($request->all());
+        return new CustomerResource($this->customerService->updateCustomer($customerUpdate,$customer->id));
     }
 }

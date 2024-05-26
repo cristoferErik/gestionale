@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id');
             $table->text('descrizione')->nullable();
-            $table->string('type');
             $table->dateTime('data_service');
+            $table->string('service_type');
+            $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });

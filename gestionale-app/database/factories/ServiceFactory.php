@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Customer;
 use App\Models\Service;
+use App\Models\ServiceWeb;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,8 +27,9 @@ class ServiceFactory extends Factory
         return [
             'customer_id'=> Customer::factory(),
             'descrizione'=> $this->faker->paragraph,
-            'type'=> $type,
             'data_service'=> $this->faker->dateTimeThisDecade(),
+            'service_type'=> $type
         ];
     }
+
 }

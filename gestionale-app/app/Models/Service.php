@@ -9,12 +9,12 @@ class Service extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['descrizione','customer_id','type'];
+    protected $fillable = ['descrizione','customer_id','service_type'];
 
     public function customer(){
         return $this->belongsTo(Customer::class);
     }
-    public function web(){
-        return $this->hasOne(Web::class,'service_id');
+    public function serviceweb(){
+        return $this->hasOne(ServiceWeb::class);
     }
 }

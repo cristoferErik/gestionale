@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Server extends Model
 {
+    
     use HasFactory;
 
     protected $fillable=[
@@ -14,11 +15,11 @@ class Server extends Model
         'panello_url',
         'utente',
         'password',
-        'web_id'
+        'service_web_id'
     ];
 
-    public function web(){
-        return $this->belongsTo(Web::class,'web_id');
+    public function serviceWeb(){
+        return $this->belongsTo(ServiceWeb::class,'service_web_id');
     }
 
 }

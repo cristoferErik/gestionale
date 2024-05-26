@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('panello_url');
             $table->string('utente');
             $table->string('password');
-            $table->unsignedBigInteger('web_id');
+            $table->unsignedBigInteger('service_web_id');
 
-            $table->foreign('web_id')->references('id')->on('webs')->onDelete('cascade');
+            $table->foreign('service_web_id')->references('id')->on('service_webs')->onDelete('cascade');
             $table->timestamps();
         });
     }
