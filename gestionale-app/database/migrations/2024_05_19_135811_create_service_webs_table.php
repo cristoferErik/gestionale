@@ -20,8 +20,8 @@ return new class extends Migration
             $table->dateTime('scadenza');
             $table->string('gestito');
             /*foreign key*/
-            $table->unsignedBigInteger('service_id');
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->unsignedBigInteger('service_grants_id');
+            $table->foreign('service_grants_id')->references('id')->on('service_grants')->onDelete('cascade');
 
             $table->timestamps();
         });

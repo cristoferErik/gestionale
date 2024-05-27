@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
-use App\Models\Service;
-use App\Models\ServiceWeb;
+use App\Models\GrantService;
+use App\Models\ServiceGrant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Service>
  */
-class ServiceFactory extends Factory
+class ServiceGrantFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +19,7 @@ class ServiceFactory extends Factory
      */
 
 
-    protected $model = Service::class;
+    protected $model = ServiceGrant::class;
 
     public function definition(): array
     {

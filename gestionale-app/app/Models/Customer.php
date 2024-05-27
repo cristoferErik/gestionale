@@ -11,6 +11,6 @@ class Customer extends Model
     protected $fillable = ['name_cliente','description','city','email','address'];
 
     public function services(){
-        return $this->hasMany(Service::class);
+        return $this->hasMany(ServiceGrant::class);
     }
 }

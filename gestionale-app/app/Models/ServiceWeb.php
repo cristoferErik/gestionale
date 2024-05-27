@@ -18,11 +18,11 @@ class ServiceWeb extends Model
         'ultimo_bk',
         'scadenza',
         'gestito',
-        'service_id',
+        'service_grant_id',
     ];
 
     public function service(){
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(ServiceGrant::class);
     }
     public function server(){
         return $this->hasMany(Server::class);

@@ -21,7 +21,7 @@ class CustomerController extends Controller
         return new CustomerCollection($this->customerService->getCustomerPaginated(5));
     }
     public function show(Customer $customer){
-        return new CustomerResource($this->customerService->getCustomer($customer));
+        return new CustomerResource($this->customerService->getCustomer($customer->id));
     }
     public function store(StoreCustomerRequest $request){
         $customer= new Customer();
@@ -34,5 +34,8 @@ class CustomerController extends Controller
         $customerUpdate = new Customer();
         $customerUpdate->fill($request->all());
         return new CustomerResource($this->customerService->updateCustomer($customerUpdate,$customer->id));
+    }
+    public function destroy(int $id){
+        $this->customerService->deleteCustomer($id);   
     }
 }

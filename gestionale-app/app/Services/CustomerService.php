@@ -14,8 +14,8 @@ class CustomerService implements CustomerServiceInterface{
     public function __construct(CustomerRepository $customerRepository){
         $this->customerRepository=$customerRepository;
     }
-    public function getCustomer(Customer $data): ?Model{
-        return $this->customerRepository->find($data->id);
+    public function getCustomer(int $id): ?Model{
+        return $this->customerRepository->find($id);
     }
     public function getCustomerPaginated(int $pagSize): LengthAwarePaginator{
         return $this->customerRepository->getPaginated($pagSize);
@@ -26,11 +26,7 @@ class CustomerService implements CustomerServiceInterface{
     public function updateCustomer(Customer $data , int $id):?Model{
         return $this->customerRepository->update($data->toArray(),$id);
     }
-    public function deleteCustomer(Customer $data): bool{
-        $customer = $this->getCustomer($data->id);
-        if($customer==null){
-            return null;
-        }
-        return $this->customerRepository->delete($customer->toArray());
+    public function deleteCustomer(int $id): bool{
+        return $this->customerRepository->delete($id);
     }
 }

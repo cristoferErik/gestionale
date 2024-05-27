@@ -41,9 +41,9 @@ class CustomerRepository implements CrudRepositoryInterface{
         return null;
     }
 
-    public function delete(array $data): bool
+    public function delete(int $id): bool
     {
-        $customer = $this->find($data["id"]);
+        $customer = $this->find($id);
         if ($customer) {
             return $customer->delete();
         }
