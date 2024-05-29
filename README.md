@@ -1,17 +1,11 @@
 se vuoi utilizzare questo repositorio, devi seguire i passi succesivi
 ######################################################################
-Devi scrivere questo nel console
----------------------------------
-sudo docker run --rm \
--u "$(id -u):$(id -g)" \
--v $(pwd):/var/www/html \
--w /var/www/html \
-laravelsail/php82-composer:latest \
-composer install --ignore-platform-reqs
+Installiamo composer in nostra app
+docker run --rm --interactive --tty -v $(pwd):/app composer install
 ######################################################################
 finalmente aggiugnere
 ---------------------------------
 sail artisan key:generate
 ######################################################################
-Installiamo composer in nostra app
-docker run --rm --interactive --tty -v $(pwd):/app composer install
+e creare un file .env e coppiare tutti i dati di .envExample.
+Cambiare root per altro nome, cosi potraì collegharti al database
