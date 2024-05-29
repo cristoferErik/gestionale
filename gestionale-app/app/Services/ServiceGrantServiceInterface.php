@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface ServiceGrantServiceInterface{
     
-    public function getService(int $service): ?Model;
+    public function getService(int $id): ?Model;
     public function getServicePaginated(int $pagSize): LengthAwarePaginator;
     public function createService(ServiceGrant $service): ?Model;
     public function updateService(ServiceGrant $service, int $id):?Model;

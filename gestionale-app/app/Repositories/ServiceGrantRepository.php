@@ -33,5 +33,4 @@ class ServiceGrantRepository implements CrudRepositoryInterface{
         }
         return false;
     }   
-
 }

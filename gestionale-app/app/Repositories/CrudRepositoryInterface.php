@@ -12,6 +12,4 @@ interface CrudRepositoryInterface
     public function insert(array $data):bool;
     public function update(array $data,int $id): ?Model;
     public function delete(int $id):bool;
-
-
 }

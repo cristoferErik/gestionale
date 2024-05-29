@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GrantServiceController;
-use App\Models\GrantService;
+use App\Http\Controllers\ServiceGrantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +16,9 @@ Route::group(
         'namespace'=>'App\Http\Controllers'
     ],function(){
         Route::apiResource('customers',CustomerController::class);
-        Route::apiResource('services',GrantServiceController::class);
+        //Ricorda che i controller dipendono complemtamente di questo nome
+        //Quindi e vai a creare una istancia deve di essere seguendo il nome
+        //serviceGrants
+        Route::apiResource('serviceGrants',ServiceGrantController::class);
     }
 );
