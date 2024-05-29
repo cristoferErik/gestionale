@@ -13,3 +13,5 @@ finalmente aggiugnere
 ---------------------------------
 sail artisan key:generate
 ######################################################################
+Installiamo composer in nostra app
+docker run --rm --interactive --tty -v $(pwd):/app composer install
