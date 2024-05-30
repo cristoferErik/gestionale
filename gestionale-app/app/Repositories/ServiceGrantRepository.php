@@ -19,18 +19,26 @@ class ServiceGrantRepository implements CrudRepositoryInterface{
     public function insert(array $data):bool{
         return ServiceGrant::insert($data);
     }
-    public function update(array $data,int $id): ?Model{
+    public function update(array $data,int $id): ?bool{
         $service=$this->find($id);
         if($service){
-            $service->update($data);
-            return $service;
+            if($service->update($data)){
+                return  true;
+            }else{
+                return false;
+            }
+            
+        }else{
+            return false;
         }
     }
     public function delete(int $id):bool{
         $service=$this->find($id);
-        if($service){
-            return $service->delete();
+        if($service){//si es null, ovvero se service no essiste
+            $service->delete();
+            return true;
         }
+        
         return false;
     }   
 }

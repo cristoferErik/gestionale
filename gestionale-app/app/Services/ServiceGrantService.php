@@ -12,7 +12,6 @@ class ServiceGrantService implements ServiceGrantServiceInterface{
     public function __construct(ServiceGrantRepository $serviceRepository){
         $this->serviceRepository=$serviceRepository;
     }
-
     public function getService(int $id): ?Model{
         return $this->serviceRepository->find($id);
     }
@@ -22,7 +21,7 @@ class ServiceGrantService implements ServiceGrantServiceInterface{
     public function createService(ServiceGrant $service): ?Model{
         return $this->serviceRepository->create($service->toArray());
     }
-    public function updateService(ServiceGrant $service, int $id):?Model{
+    public function updateService(ServiceGrant $service, int $id):?bool{
         return $this->serviceRepository->update($service->toArray(),$id);
     }
     public function deleteService(int $id): bool{

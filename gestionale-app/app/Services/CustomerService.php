@@ -23,7 +23,7 @@ class CustomerService implements CustomerServiceInterface{
     public function createCustomer(Customer $customer): ?Model{
         return $this->customerRepository->create($customer->toArray());
     }
-    public function updateCustomer(Customer $data , int $id):?Model{
+    public function updateCustomer(Customer $data , int $id):?bool{
         return $this->customerRepository->update($data->toArray(),$id);
     }
     public function deleteCustomer(int $id): bool{

@@ -31,10 +31,10 @@ class CustomerRepository implements CrudRepositoryInterface{
         return Customer::insert($data);
     }
 
-    public function update(array $data, int $id): ?Model
+    public function update(array $data, int $id): ?bool
     {
         $customer = $this->find($id);
-        if ($customer) {
+        if ($customer){
             $customer->update($data);
             return $customer;
         }

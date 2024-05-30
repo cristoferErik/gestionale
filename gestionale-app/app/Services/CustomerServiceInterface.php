@@ -11,6 +11,6 @@ interface CustomerServiceInterface{
     public function getCustomer(int $id): ?Model;
     public function getCustomerPaginated(int $pagSize): LengthAwarePaginator;
     public function createCustomer(Customer $customer): ?Model;
-    public function updateCustomer(Customer $customer, int $id):?Model;
+    public function updateCustomer(Customer $customer, int $id):?bool;
     public function deleteCustomer(int $customer): bool;
 }
