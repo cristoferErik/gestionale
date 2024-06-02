@@ -13,12 +13,7 @@ class ServiceWeb extends Model
     
     protected $fillable=
     [
-        'costo_annuale',
-        'aggiornamento',
-        'ultimo_bk',
-        'scadenza',
-        'gestito',
-        'service_grant_id',
+        'service_grant_id'
     ];
 
     public function service(){
@@ -26,5 +21,8 @@ class ServiceWeb extends Model
     }
     public function server(){
         return $this->hasMany(Server::class);
+    }
+    public function webSite(){
+        return $this->hasMany(WebSite::class);
     }
 }

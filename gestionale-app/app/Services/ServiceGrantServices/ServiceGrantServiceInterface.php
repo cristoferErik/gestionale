@@ -1,7 +1,6 @@
 <?php
-namespace App\Services;
+namespace App\Services\ServiceGrantServices;
 
-use App\Models\GrantService;
 use App\Models\ServiceGrant;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;

@@ -7,7 +7,7 @@ use App\Http\Requests\CustomerRequest\UpdateCustomerRequest;
 use App\Http\Resources\CustomerResources\CustomerCollection;
 use App\Http\Resources\CustomerResources\CustomerResource;
 use App\Models\Customer;
-use App\Services\CustomerService;
+use App\Services\CustomerServices\CustomerService;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -20,8 +20,12 @@ class CustomerController extends Controller
     public function index(){
         return new CustomerCollection($this->customerService->getCustomerPaginated(5));
     }
-    public function show(Customer $customer){
-        return new CustomerResource($this->customerService->getCustomer($customer->id));
+    public function show(int $id){
+        $customer=$this->customerService->getCustomer($id);
+        if($customer){
+            return new CustomerResource($customer);
+        }
+        return response()->json(['message'=>'value was not founded!'],404);
     }
     public function store(StoreCustomerRequest $request){
         $customer= new Customer();

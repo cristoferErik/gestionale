@@ -14,11 +14,6 @@ return new class extends Migration
         Schema::create('service_webs', function (Blueprint $table) {
 
             $table->id();
-            $table->float('costo_annuale');
-            $table->dateTime('aggiornamento');
-            $table->dateTime('ultimo_bk');
-            $table->dateTime('scadenza');
-            $table->string('gestito');
             /*foreign key*/
             $table->unsignedBigInteger('service_grants_id');
             $table->foreign('service_grants_id')->references('id')->on('service_grants')->onDelete('cascade');

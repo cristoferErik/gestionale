@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('servers', function (Blueprint $table) {
             $table->id();
-            $table->string('server_url');
+            $table->string('server_url')->nullable();
             $table->string('panello_url');
             $table->string('utente');
             $table->string('password');

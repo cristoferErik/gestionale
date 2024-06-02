@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
-            $table->string('name_cliente');
-            $table->text('descrizione')->nullable();
-            $table->string('citta')->nullable();
-            $table->string('email')->unique();
-            $table->string('address')->nullable();
-            $table->string('cellphone')->nullable();
+            $table->dateTime('data_aggiornamento');
+            $table->string('descrizione');
+            $table->unsignedBigInteger('web_site_id');
+            $table->foreign('web_site_id')->references('id')->on('web_sites')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('maintenances');
     }
 };

@@ -1,5 +1,5 @@
 <?php
-namespace App\Services;
+namespace App\Services\ServiceGrantServices;
 
 use App\Models\ServiceGrant;
 use App\Repositories\ServiceGrantRepository;

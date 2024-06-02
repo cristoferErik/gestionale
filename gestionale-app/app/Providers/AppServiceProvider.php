@@ -5,10 +5,10 @@ namespace App\Providers;
 use App\Repositories\CrudRepositoryInterface;
 use App\Repositories\CustomerRepository;
 use App\Repositories\ServiceGrantRepository;
-use App\Services\CustomerService;
-use App\Services\CustomerServiceInterface;
-use App\Services\ServiceGrantService;
-use App\Services\ServiceGrantServiceInterface;
+use App\Services\CustomerServices\CustomerService;
+use App\Services\CustomerServices\CustomerServiceInterface;
+use App\Services\ServiceGrantServices\ServiceGrantService;
+use App\Services\ServiceGrantServices\ServiceGrantServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
