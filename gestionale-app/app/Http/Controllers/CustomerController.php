@@ -22,7 +22,7 @@ class CustomerController extends Controller
     }
     public function show(int $id){
         $customer=$this->customerService->getCustomer($id);
-        if($customer){
+        if($customer!=null){
             return new CustomerResource($customer);
         }
         return response()->json(['message'=>'value was not founded!'],404);
@@ -32,12 +32,16 @@ class CustomerController extends Controller
         $customer->fill($request->all());
         return new CustomerResource($this->customerService->createCustomer($customer));
     }
-    public function update(UpdateCustomerRequest $request, Customer $customer){
+    public function update(UpdateCustomerRequest $request, int $id){
         //La variable $request, ottiene tutti i dati senza il id, e verifica che siano corretti
         //$customer, prende tutti i dati compresso il Id
         $customerUpdate = new Customer();
         $customerUpdate->fill($request->all());
-        return new CustomerResource($this->customerService->updateCustomer($customerUpdate,$customer->id));
+        $flag=$this->customerService->updateCustomer($customerUpdate,$id);
+        if($flag){
+            return response()->json(['message'=>'value was updated!'],200);
+        }
+        return response()->json(['message'=>'value was not updated!'],400);
     }
     public function destroy(int $id){
         $this->customerService->deleteCustomer($id);   

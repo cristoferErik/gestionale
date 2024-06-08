@@ -10,11 +10,12 @@ class UpdateCustomerRequest extends FormRequest
      * Determine if the user is authorized to make this request.
      */
     private $rulesCustomer=[
-        'nameCliente'=>['required'],
-        'description'=>['required'],
-        'city'=>['required'],
+        'name'=>['required'],
+        'descrizione'=>['required'],
+        'citta'=>['required'],
+        'address'=>['required'],
         'email'=>['required','email'],
-        'address'=>['required']
+        'cellphone'=>['required']
     ];
     public function authorize(): bool
     {

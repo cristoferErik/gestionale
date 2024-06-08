@@ -1,13 +1,13 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\BasicRepositoriesFile;
 
 use App\Models\WebSite;
-use App\Repositories\CrudRepositoryInterface;
+use App\Repositories\CrudRepositoriesFile\CrudRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
  class WebSiteRepository implements CrudRepositoryInterface{
-    public function find(int $id):?Model{
+    public function findById(int $id):?Model{
         return WebSite::find($id);
     }
     public function getPaginated(int $pagSize): LengthAwarePaginator{
@@ -20,8 +20,8 @@ use Illuminate\Database\Eloquent\Model;
     public function insert(array $data):bool{
         return WebSite::insert($data);
     }
-    public function update(array $data,int $id): ?bool{
-        $sitiWeb=$this->find($id);
+    public function update(array $data,int $id): bool{
+        $sitiWeb=$this->findById($id);
         if($sitiWeb->update($data)){
             return true;
         }
@@ -29,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
     }
     public function delete(int $id):bool
     {
-        $service=$this->find($id);
+        $service=$this->findById($id);
         if($service){//si es null, ovvero se service no essiste
             $service->delete();
             return true;

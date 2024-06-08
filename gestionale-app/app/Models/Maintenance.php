@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Backup extends Model
+class Maintenance extends Model
 {
     use HasFactory;
 
     protected $fillable=[
-        'date_bk',
-        'web_site_id'
+        'data_aggiornamento',
+        'descrizione',
+        'web_site_id',
     ];
-    public function backup(){
+
+    public function serviceUpdate(){
         $this->belongsTo(ServiceUpdate::class);
     }
 }

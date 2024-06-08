@@ -2,7 +2,7 @@
 namespace App\Services\ServiceGrantServices;
 
 use App\Models\ServiceGrant;
-use App\Repositories\ServiceGrantRepository;
+use App\Repositories\BasicRepositoriesFile\ServiceGrantRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +13,7 @@ class ServiceGrantService implements ServiceGrantServiceInterface{
         $this->serviceRepository=$serviceRepository;
     }
     public function getService(int $id): ?Model{
-        return $this->serviceRepository->find($id);
+        return $this->serviceRepository->findById($id);
     }
     public function getServicePaginated(int $pagSize): LengthAwarePaginator{
         return $this->serviceRepository->getPaginated($pagSize);

@@ -15,10 +15,9 @@ return new class extends Migration
 
             $table->id();
             /*foreign key*/
-            $table->unsignedBigInteger('service_grants_id');
-            $table->foreign('service_grants_id')->references('id')->on('service_grants')->onDelete('cascade');
-
-            $table->timestamps();
+            $table->float('costo_totale');
+            $table->unsignedBigInteger('service_grant_id');
+            $table->foreign('service_grant_id')->references('id')->on('service_grants')->onDelete('cascade');
         });
     }
 

@@ -9,7 +9,12 @@ class ServiceGrant extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['descrizione','data_service','service_type','customer_id'];
+    protected $fillable = [
+        'descrizione',
+        'data_service',
+        'service_type',
+        'customer_id'
+    ];
 
     public function customer(){
         return $this->belongsTo(Customer::class);

@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('backups', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('data_bk');
-            $table->boolean('status');
+            $table->dateTime('date_bk');
             $table->unsignedBigInteger('web_site_id');
             $table->foreign('web_site_id')->references('id')->on('web_sites')->onDelete('cascade');
             $table->timestamps();

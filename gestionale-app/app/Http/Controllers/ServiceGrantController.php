@@ -23,7 +23,7 @@ class ServiceGrantController extends Controller
     public function show(int $id)
     {   
         $listServices=$this->serviceGrantService->getService($id);
-        if($listServices){
+        if($listServices!=null){
             //Filter
             $serviceGrantResource = new ServiceGrantResource($listServices);
             return $serviceGrantResource;

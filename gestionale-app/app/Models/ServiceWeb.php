@@ -13,16 +13,17 @@ class ServiceWeb extends Model
     
     protected $fillable=
     [
+        'costo_totale',
         'service_grant_id'
     ];
 
-    public function service(){
+    public function serviceGrant(){
         return $this->belongsTo(ServiceGrant::class);
     }
     public function server(){
         return $this->hasMany(Server::class);
     }
-    public function webSite(){
-        return $this->hasMany(WebSite::class);
+    public function serviceUpdates(){
+        return $this->belongsTo(ServiceUpdate::class);
     }
 }

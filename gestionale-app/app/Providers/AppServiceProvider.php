@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Repositories\CrudRepositoryInterface;
-use App\Repositories\CustomerRepository;
-use App\Repositories\ServiceGrantRepository;
+use App\Repositories\BasicRepositoriesFile\CustomerRepository;
+use App\Repositories\BasicRepositoriesFile\ServiceGrantRepository;
+use App\Repositories\CrudRepositoriesFile\CrudRepositoryInterface;
 use App\Services\CustomerServices\CustomerService;
 use App\Services\CustomerServices\CustomerServiceInterface;
 use App\Services\ServiceGrantServices\ServiceGrantService;

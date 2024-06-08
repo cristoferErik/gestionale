@@ -15,10 +15,12 @@ Route::group(
         'prefix'=>'v1',
         'namespace'=>'App\Http\Controllers'
     ],function(){
-        Route::apiResource('customers',CustomerController::class);
         //Ricorda che i controller dipendono complemtamente di questo nome
         //Quindi e vai a creare una istancia deve di essere seguendo il nome
-        //serviceGrants
+        //customers
+        Route::apiResource('customers',CustomerController::class);
         Route::apiResource('serviceGrants',ServiceGrantController::class);
+
+        include __DIR__ . '/CustomRoutes/HomeRoutes.php';
     }
 );

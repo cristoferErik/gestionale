@@ -1,12 +1,12 @@
 <?php
-namespace App\Repositories;
- use App\Models\ServiceWeb;
- use App\Repositories\CrudRepositoryInterface;
+namespace App\Repositories\BasicRepositoriesFile;
+use App\Models\ServiceWeb;
+use App\Repositories\CrudRepositoriesFile\CrudRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
  class ServiceWebRepository implements CrudRepositoryInterface{
-    public function find(int $id):?Model
+    public function findById(int $id):?Model
     {
         return ServiceWeb::find($id);
     }
@@ -22,9 +22,9 @@ use Illuminate\Database\Eloquent\Model;
     public function insert(array $data):bool{
         return ServiceWeb::insert($data);
     }
-    public function update(array $data,int $id): ?bool
+    public function update(array $data,int $id): bool
     {
-        $serviceWeb=$this->find($id);
+        $serviceWeb=$this->findById($id);
         if($serviceWeb->update($data)){
             return true;
         }
@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
     }
     public function delete(int $id): bool
     {
-        $serviceWeb=$this->find($id);
+        $serviceWeb=$this->findById($id);
         if($serviceWeb)
         {//si es null, ovvero se il servizio no essiste
             $serviceWeb->delete();

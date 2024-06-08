@@ -2,7 +2,7 @@
 namespace App\Services\CustomerServices;
 
 use App\Models\Customer;
-use App\Repositories\CustomerRepository;
+use App\Repositories\BasicRepositoriesFile\CustomerRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -15,7 +15,7 @@ class CustomerService implements CustomerServiceInterface{
         $this->customerRepository=$customerRepository;
     }
     public function getCustomer(int $id): ?Model{
-        return $this->customerRepository->find($id);
+        return $this->customerRepository->findById($id);
     }
     public function getCustomerPaginated(int $pagSize): LengthAwarePaginator{
         return $this->customerRepository->getPaginated($pagSize);

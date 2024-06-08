@@ -10,12 +10,14 @@ class ServiceUpdate extends Model
     use HasFactory;
     protected $fillable = 
     [
-        'periodo_aggiornamento'
-        ,'tipo'
-        ,'data_ini'
-        ,'data_fin'
-        ,'status'
-        ,'costo'
-        ,'web_site_id'
+        'periodo_aggiornamento',
+        'data_inizio',
+        'date_scadenza',
+        'status',
+        'costo',
+        'service_web_id'
     ];
+    public function ServiceWeb(){
+        return $this->hasMany(ServiceWeb::class);
+    }
 }

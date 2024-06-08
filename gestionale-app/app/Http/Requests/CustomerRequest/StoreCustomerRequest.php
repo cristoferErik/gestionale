@@ -22,17 +22,12 @@ class StoreCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nameCliente' => ['required'],
-            'description' => ['required'],
-            'city' => ['required'],
+            'name' => ['required'],
+            'descrizione' => ['sometimes'],
+            'citta' => ['sometimes'],
             'email'=>['required','email'],
-            'address'=>['required']
+            'address'=>['sometimes'],
+            'cellphone'=>['required']
         ];
-    }
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'name_cliente'=>$this->nameCliente
-        ]);
     }
 }
