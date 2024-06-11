@@ -10,7 +10,7 @@ class Customer extends Model
     use HasFactory;
     protected $fillable = ['name','descrizione','citta','email','address','cellphone'];
 
-    public function services(){
+    public function servicesGrant(){
         return $this->hasMany(ServiceGrant::class);
     }
 }

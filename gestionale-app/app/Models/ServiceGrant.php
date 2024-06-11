@@ -19,7 +19,8 @@ class ServiceGrant extends Model
     public function customer(){
         return $this->belongsTo(Customer::class);
     }
-    public function serviceweb(){
+    public function serviceWeb(){
         return $this->hasOne(ServiceWeb::class);
     }
+
 }

@@ -1,24 +1,25 @@
 <?php
-namespace App\Repositories\BasicRepositoriesFile;
+namespace App\Repositories\BasicRepositories;
 
-use App\Models\ServiceGrant;
-use App\Repositories\CrudRepositoriesFile\CrudRepositoryInterface;
+use App\Models\Server;
+use App\Repositories\CrudRepositories\CrudRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
-class ServiceGrantRepository implements CrudRepositoryInterface{
+ class ServerRepository implements CrudRepositoryInterface{
     public function findById(int $id):?Model{
-        return ServiceGrant::find($id);
+        return Server::find($id);
     }
     public function getPaginated(int $pagSize): LengthAwarePaginator{
-        $query = ServiceGrant::query();
+        $query=Server::query();
         return $query->paginate($pagSize);
     }
     public function create(array $data):?Model{
-        return ServiceGrant::create($data);
+        return Server::create($data);
     }
     public function insert(array $data):bool{
-        return ServiceGrant::insert($data);
+        return Server::insert($data);
     }
     public function update(array $data,int $id): bool{
         $service=$this->findById($id);
@@ -28,11 +29,14 @@ class ServiceGrantRepository implements CrudRepositoryInterface{
         return false;
     }
     public function delete(int $id):bool{
-        $service=$this->findById($id);
-        if($service){//si es null, ovvero se service no essiste
-            $service->delete();
+        $server=$this->findById($id);
+        if($server){//si es null, ovvero se service no essiste
+            $server->delete();
             return true;
         }
         return false;
-    }   
-}
+    }
+    public function getAll(): Collection{
+        return Server::all();
+    }
+ }

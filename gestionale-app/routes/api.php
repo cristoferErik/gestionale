@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\GrantServiceController;
 use App\Http\Controllers\ServiceGrantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

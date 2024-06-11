@@ -1,9 +1,10 @@
 <?php
-namespace App\Repositories\BasicRepositoriesFile;
+namespace App\Repositories\BasicRepositories;
 
-use App\Repositories\CrudRepositoriesFile\CrudRepositoryInterface;
+use App\Repositories\CrudRepositories\CrudRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class UpdateRepository implements CrudRepositoryInterface{
     public function findById(int $id):?Model{
@@ -23,5 +24,9 @@ class UpdateRepository implements CrudRepositoryInterface{
     }
     public function delete(int $id):bool{
         return false;
+    }
+    public function getAll(): Collection{
+        $a=collect();
+        return $a;
     }
 }

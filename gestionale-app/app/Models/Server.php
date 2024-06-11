@@ -17,9 +17,11 @@ class Server extends Model
         'password',
         'service_web_id'
     ];
-
+    
     public function serviceWeb(){
-        return $this->belongsTo(ServiceWeb::class,'service_web_id');
+        return $this->belongsTo(ServiceWeb::class);
     }
-
+    public function webSite(){
+        return $this->hasMany(WebSite::class);
+    }
 }

@@ -1,9 +1,10 @@
 <?php
-namespace App\Repositories\BasicRepositoriesFile;
+namespace App\Repositories\BasicRepositories;
 use App\Models\ServiceWeb;
-use App\Repositories\CrudRepositoriesFile\CrudRepositoryInterface;
+use App\Repositories\CrudRepositories\CrudRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
  class ServiceWebRepository implements CrudRepositoryInterface{
     public function findById(int $id):?Model
@@ -39,5 +40,8 @@ use Illuminate\Database\Eloquent\Model;
             return true;
         }
         return false;
+    }
+    public function getAll(): Collection{
+        return ServiceWeb::all();
     }
  }

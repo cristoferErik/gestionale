@@ -1,8 +1,10 @@
 <?php
-namespace App\Repositories\CrudRepositoriesFile;
+namespace App\Repositories\CrudRepositories;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 interface CrudRepositoryInterface
 {
@@ -12,4 +14,5 @@ interface CrudRepositoryInterface
     public function insert(array $data):bool;
     public function update(array $data,int $id): bool;
     public function delete(int $id):bool;
+    public function getAll(): Collection;
 }

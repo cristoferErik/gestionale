@@ -17,7 +17,13 @@ class WebSite extends Model
         'data_creazione',
         'server_id'
     ];
-    public function serviceWeb(){
-        return $this->belongsTo(ServiceWeb::class);
+    public function server(){
+        return $this->belongsTo(Server::class);
+    }
+    public function backup(){
+        return $this->hasMany(Backup::class);
+    }
+    public function maintenance(){
+        return $this->hasMany(Maintenance::class);
     }
 }

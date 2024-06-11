@@ -3,19 +3,17 @@
 namespace App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\Controller;
-use App\Services\CustomerTypeOfServices\CustomerTypeOfServices;
+use App\Services\HomeServices\HomeService;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public $customerTypeOfServices;
-
-    public function __construct(CustomerTypeOfServices $customerTypeOfServices)
-    {
-        $this->customerTypeOfServices=$customerTypeOfServices;
+    public $homeServices;
+    public function __construct(HomeService $homeServices){
+        $this->homeServices=$homeServices;
     }
 
-    public function getServicesUpdateByCustomer(int $pag){
-        return $this->customerTypeOfServices->getServicesOfUpdateByCustomer($pag);
+    public function getServicesUpdateByCustomer($pag){
+        return $this->homeServices->getCustomerServiceWebs($pag);
     }
 }

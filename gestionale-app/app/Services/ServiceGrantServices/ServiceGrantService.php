@@ -2,7 +2,7 @@
 namespace App\Services\ServiceGrantServices;
 
 use App\Models\ServiceGrant;
-use App\Repositories\BasicRepositoriesFile\ServiceGrantRepository;
+use App\Repositories\BasicRepositories\ServiceGrantRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 

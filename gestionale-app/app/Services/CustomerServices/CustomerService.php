@@ -2,10 +2,9 @@
 namespace App\Services\CustomerServices;
 
 use App\Models\Customer;
-use App\Repositories\BasicRepositoriesFile\CustomerRepository;
+use App\Repositories\BasicRepositories\CustomerRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 
 class CustomerService implements CustomerServiceInterface{
     //iniettiamo la dipendenza
