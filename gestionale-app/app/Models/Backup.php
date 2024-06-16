@@ -11,9 +11,9 @@ class Backup extends Model
 
     protected $fillable=[
         'date_bk',
-        'web_site_id'
+        'record_update_id'
     ];
-    public function backup(){
-        $this->belongsTo(ServiceUpdate::class);
+    public function RecordUpdate(){
+        return $this->belongsTo(RecordUpdate::class);
     }
 }

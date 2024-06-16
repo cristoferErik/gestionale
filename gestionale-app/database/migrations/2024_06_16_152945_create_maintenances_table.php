@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('data_aggiornamento');
+            $table->dateTime('date_update');
             $table->string('descrizione');
-            $table->unsignedBigInteger('web_site_id');
-            $table->foreign('web_site_id')->references('id')->on('web_sites')->onDelete('cascade');
+            $table->unsignedBigInteger('record_update_id');
+            $table->foreign('record_update_id')->references('id')->on('record_updates')->onDelete('cascade');
             $table->timestamps();
         });
     }

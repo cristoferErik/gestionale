@@ -8,16 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceUpdate extends Model
 {
     use HasFactory;
+
     protected $fillable = 
     [
-        'periodo_aggiornamento',
-        'data_inizio',
-        'date_scadenza',
+        'update_period',
+        'date_ini',
+        'date_end',
         'status',
         'costo',
-        'service_web_id'
+        'service_grant_id'
     ];
-    public function ServiceWeb(){
-        return $this->hasMany(ServiceWeb::class);
+    public function serviceGrant(){
+        return $this->belongsTo(ServiceGrant::class);
     }
+    public function webSite(){
+        return $this->hasMany(WebSite::class);
+    }
+    
 }

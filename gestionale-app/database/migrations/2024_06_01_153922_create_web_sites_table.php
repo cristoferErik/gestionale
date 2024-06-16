@@ -16,9 +16,12 @@ return new class extends Migration
             $table->string('nome');
             $table->string('url')->nullable();
             $table->float('costo')->nullable();
-            $table->dateTime('data_creazione')->nullable();
+            $table->date('date_creation');
             $table->unsignedBigInteger('server_id');
+            $table->unsignedBigInteger('service_update_id');
             $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
+            
+            $table->foreign('service_update_id')->references('id')->on('service_updates')->onDelete('cascade');
             $table->timestamps();
         });
     }

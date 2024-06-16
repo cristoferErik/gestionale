@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('backups', function (Blueprint $table) {
+        Schema::create('record_updates', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('date_bk');
+            $table->Date('record_date');
             $table->unsignedBigInteger('web_site_id');
             $table->foreign('web_site_id')->references('id')->on('web_sites')->onDelete('cascade');
             $table->timestamps();
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('backups');
+        Schema::dropIfExists('record_updates');
     }
 };

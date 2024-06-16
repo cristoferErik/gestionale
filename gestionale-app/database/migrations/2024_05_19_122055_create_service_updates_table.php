@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('service_updates', function (Blueprint $table) {
             $table->id();
-            $table->integer("periodo_aggiornamento");
-            $table->dateTime("data_inizio");
-            $table->dateTime("date_scadenza");
+            $table->integer("update_period");
+            $table->date("date_ini");
+            $table->date("date_end");
             $table->boolean('status');
             $table->float("costo");
-            $table->unsignedBigInteger('service_web_id')->unique();
-            $table->foreign('service_web_id')->references('id')->on('service_updates');
+            $table->unsignedBigInteger('service_grant_id');
+            $table->foreign('service_grant_id')->references('id')->on('service_grants')->onDelete('cascade');
             $table->timestamps();
         });
     }

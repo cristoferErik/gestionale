@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\BasicRepositories;
 
+use App\Models\ServiceGrant;
 use App\Repositories\CrudRepositories\CrudRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;

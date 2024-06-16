@@ -22,5 +22,8 @@ class ServiceGrant extends Model
     public function serviceWeb(){
         return $this->hasOne(ServiceWeb::class);
     }
+    public function serviceUpdate(){
+        return $this->hasOne(ServiceUpdate::class);
+    }
 
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->float('costo_totale');
             $table->unsignedBigInteger('service_grant_id');
             $table->foreign('service_grant_id')->references('id')->on('service_grants')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

@@ -8,22 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class WebSite extends Model
 {
     use HasFactory;
-
     protected $fillable=
     [
         'nome',
         'url',
         'costo',
-        'data_creazione',
-        'server_id'
+        'date_creation',
+        'server_id',
+        'service_update_id'
     ];
     public function server(){
         return $this->belongsTo(Server::class);
     }
-    public function backup(){
-        return $this->hasMany(Backup::class);
+    public function recordUpdate(){
+        return $this->hasMany(RecordUpdate::class);
     }
-    public function maintenance(){
-        return $this->hasMany(Maintenance::class);
+    public function serviceUpdate(){
+        return $this->belongsTo(ServiceUpdate::class);
     }
+    
 }

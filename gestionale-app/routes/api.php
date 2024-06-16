@@ -20,6 +20,6 @@ Route::group(
         Route::apiResource('customers',CustomerController::class);
         Route::apiResource('serviceGrants',ServiceGrantController::class);
 
-        include __DIR__ . '/CustomRoutes/HomeRoutes.php';
+        include __DIR__ . '/CustomRoutes/CustomerRoutes.php';
     }
 );

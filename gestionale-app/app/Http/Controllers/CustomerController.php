@@ -46,4 +46,8 @@ class CustomerController extends Controller
     public function destroy(int $id){
         $this->customerService->deleteCustomer($id);   
     }
+
+    public function getServicesUpdateByCustomer($pag){
+        return $this->customerService->getCustomerServiceWebs($pag);
+    }
 }

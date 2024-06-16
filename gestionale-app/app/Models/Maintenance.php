@@ -10,12 +10,12 @@ class Maintenance extends Model
     use HasFactory;
 
     protected $fillable=[
-        'data_aggiornamento',
+        'date_update',
         'descrizione',
-        'web_site_id',
+        'record_update_id',
     ];
 
-    public function serviceUpdate(){
-        $this->belongsTo(ServiceUpdate::class);
+    public function RecordUpdate(){
+        return $this->belongsTo(RecordUpdate::class);
     }
 }
