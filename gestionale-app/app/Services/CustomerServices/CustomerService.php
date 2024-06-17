@@ -5,6 +5,7 @@ namespace App\Services\CustomerServices;
 use App\Models\Customer;
 use App\Repositories\BasicRepositories\CustomerRepository;
 use App\Repositories\BasicRepositories\WebSiteRepository;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,15 +41,14 @@ class CustomerService implements CustomerServiceInterface
     {
         return $this->customerRepository->delete($id);
     }
-    
+
     public function getCustomerServiceWebs(int $pag)
     {
-        $customers = $this->customerRepository->getWebSiteByCustomer($pag);
-        //riceve customer_id
-        //e fornisce service_update_id
-        $uwc = $this->customerRepository->getServiceUpdatesByCustomer(1);
-        //riceve un service_update_id
-        $ruw = $this->webSiteRepository->getRecordUpdateByWebSite(1);
-        return $uwc;
+        
+        $pagCustomersId = $this->customerRepository->getListCustomerById($pag);
+        $listCustomersId=$pagCustomersId->pluck('id')->all();
+        // Aggiugiamo un list di Id affinche possiamo ottenere tutti i dati
+        $webSiteC = $this->customerRepository->getWebSiteByCustomer($listCustomersId);
+        return $webSiteC;
     }
 }

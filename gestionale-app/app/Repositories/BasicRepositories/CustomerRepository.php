@@ -16,6 +16,12 @@ class CustomerRepository implements CrudRepositoryInterface
     {
         return Customer::find($id);
     }
+    public function getListCustomerById(int $pagSize){
+        $customers = DB::table('customers')
+        ->select('customers.id')
+        ->paginate($pagSize);
+        return $customers;
+    }
     public function getPaginated(int $pagSize): LengthAwarePaginator
     {
         $query = Customer::query();
@@ -53,37 +59,26 @@ class CustomerRepository implements CrudRepositoryInterface
         return Customer::all();
     }
 
-    public function getWebSiteByCustomer(int $pag)
+    public function getWebSiteByCustomer(Array $customersId)
     {
         $customers = DB::table('customers')
             ->join('service_grants', 'customers.id', '=', 'service_grants.customer_id')
             ->join('service_updates', 'service_grants.id', '=', 'service_updates.service_grant_id')
             ->join('web_sites','web_sites.service_update_id','=','service_updates.id')
+            ->join('record_updates','record_updates.web_site_id','=','web_sites.id')
             ->select(
                 'customers.id as customer_id', 
                 'customers.name as customer_name',
-                DB::raw('COUNT(web_sites.id) as web_sites_count')
+                'service_updates.update_period',
+                'web_sites.date_creation',
+                DB::raw('COUNT(web_sites.id) as web_sites_count'),
+                DB::raw('MAX(record_updates.record_date) as last_update')
                 )
-            ->groupBy('customers.id')
-            ->paginate($pag);
-        return $customers;
-    }
-    public function getServiceUpdatesByCustomer(int $customerId){
-        $customers = DB::table('customers')
-            ->join('service_grants', 'customers.id', '=', 'service_grants.customer_id')
-            ->join('service_updates', 'service_grants.id', '=', 'service_updates.service_grant_id')
-            ->join('web_sites','web_sites.service_update_id','=','service_updates.id')
-            ->select(
-                    'service_updates.id',
-                    'service_updates.date_ini',
-                    'service_updates.date_end',
-                    'service_updates.update_period'
-                )
-            ->where('customers.id',$customerId)
-            ->groupBy('service_updates.id')
+            ->groupBy('customers.id','service_updates.id','web_sites.id')
+            ->whereIn('customers.id',$customersId)
             ->get();
-
         return $customers;
     }
+
 
 }
