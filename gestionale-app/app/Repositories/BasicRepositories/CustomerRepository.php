@@ -16,12 +16,6 @@ class CustomerRepository implements CrudRepositoryInterface
     {
         return Customer::find($id);
     }
-    public function getListCustomerById(int $pagSize){
-        $customers = DB::table('customers')
-        ->select('customers.id')
-        ->paginate($pagSize);
-        return $customers;
-    }
     public function getPaginated(int $pagSize): LengthAwarePaginator
     {
         $query = Customer::query();
@@ -68,10 +62,8 @@ class CustomerRepository implements CrudRepositoryInterface
             ->join('record_updates','record_updates.web_site_id','=','web_sites.id')
             ->select(
                 'customers.id as customer_id', 
-                'customers.name as customer_name',
                 'service_updates.update_period',
                 'web_sites.date_creation',
-                DB::raw('COUNT(web_sites.id) as web_sites_count'),
                 DB::raw('MAX(record_updates.record_date) as last_update')
                 )
             ->groupBy('customers.id','service_updates.id','web_sites.id')
@@ -80,5 +72,18 @@ class CustomerRepository implements CrudRepositoryInterface
         return $customers;
     }
 
-
+    public function getQuantityWebSiteByCustomer(Array $customersId){
+        $customers = DB::table('customers')
+        ->join('service_grants', 'customers.id', '=', 'service_grants.customer_id')
+        ->join('service_updates', 'service_grants.id', '=', 'service_updates.service_grant_id')
+        ->join('web_sites','web_sites.service_update_id','=','service_updates.id')
+        ->select(
+            'customers.id as customer_id', 
+            DB::raw('COUNT(web_sites.id) as web_sites_count'),
+        )
+        ->whereIn('customers.id',$customersId)
+        ->groupBy('customers.id')
+        ->get();
+        return $customers;
+    }
 }

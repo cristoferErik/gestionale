@@ -45,10 +45,31 @@ class CustomerService implements CustomerServiceInterface
     public function getCustomerServiceWebs(int $pag)
     {
         
-        $pagCustomersId = $this->customerRepository->getListCustomerById($pag);
-        $listCustomersId=$pagCustomersId->pluck('id')->all();
+        $pagCustomersId = $this->customerRepository->getPaginated($pag);
+        $customers=$pagCustomersId->items();
+        $listCustomerIds=$pagCustomersId->pluck('id')->all();
+        $webSiteByCustomers = $this->customerRepository->getWebSiteByCustomer($listCustomerIds);
+        $quantityWebSiteByCustomers=$this->customerRepository->getQuantityWebSiteByCustomer($listCustomerIds);
+        
+        $webSiteTable=[];
+        foreach($customers as $customer){
+            foreach($quantityWebSiteByCustomers as $quantityWebSiteByCustomer){
+                if($quantityWebSiteByCustomer->customer_id===$customer->id){
+                    $webSiteTable[]=[
+                        'customerId'=> $customer->id,
+                        'customerName'=>$customer->name,
+                        'quantityWebSite'=>$quantityWebSiteByCustomer->web_sites_count
+                    ];
+                }
+            }
+            foreach($webSiteByCustomers as $webSiteByCustomer){
+                if($webSiteByCustomer->customer_id==$customer->id){
+                    
+                }
+            }
+        }
         // Aggiugiamo un list di Id affinche possiamo ottenere tutti i dati
-        $webSiteC = $this->customerRepository->getWebSiteByCustomer($listCustomersId);
-        return $webSiteC;
+        
+        return $webSiteTable;
     }
 }
