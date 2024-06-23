@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\WebSite;
+use Carbon\Carbon;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +20,7 @@ class RecordUpdateFactory extends Factory
     public function definition(): array
     {
         return [
-            'record_date'=> $this->faker->dateTimeThisYear(),
+            'record_date'=> Carbon::createFromFormat('Y-m-d','2024-05-22'),
             'web_site_id'=> WebSite::factory()
         ];
     }

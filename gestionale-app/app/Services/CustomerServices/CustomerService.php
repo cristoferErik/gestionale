@@ -44,32 +44,52 @@ class CustomerService implements CustomerServiceInterface
 
     public function getCustomerServiceWebs(int $pag)
     {
-        
-        $pagCustomersId = $this->customerRepository->getPaginated($pag);
-        $customers=$pagCustomersId->items();
-        $listCustomerIds=$pagCustomersId->pluck('id')->all();
+
+        $pagCustomersId = $this->customerRepository->getListCustomerById($pag);
+        $customers = $pagCustomersId->items();
+        $listCustomerIds = $pagCustomersId->pluck('id')->all();
         $webSiteByCustomers = $this->customerRepository->getWebSiteByCustomer($listCustomerIds);
-        $quantityWebSiteByCustomers=$this->customerRepository->getQuantityWebSiteByCustomer($listCustomerIds);
-        
-        $webSiteTable=[];
-        foreach($customers as $customer){
-            foreach($quantityWebSiteByCustomers as $quantityWebSiteByCustomer){
-                if($quantityWebSiteByCustomer->customer_id===$customer->id){
-                    $webSiteTable[]=[
-                        'customerId'=> $customer->id,
-                        'customerName'=>$customer->name,
-                        'quantityWebSite'=>$quantityWebSiteByCustomer->web_sites_count
-                    ];
-                }
-            }
-            foreach($webSiteByCustomers as $webSiteByCustomer){
-                if($webSiteByCustomer->customer_id==$customer->id){
-                    
-                }
-            }
-        }
+
+        $tableWebSiteByCustomer = [];
+        $listQuantity = [];
         // Aggiugiamo un list di Id affinche possiamo ottenere tutti i dati
-        
-        return $webSiteTable;
+
+        foreach ($customers as $customer) {
+            $quantity = 0;
+            $progToUpdate=0;
+            $progUpdated=0;
+            foreach ($webSiteByCustomers as $webSiteByCustomer) {
+                if ($customer->id === $webSiteByCustomer->customer_id) {
+                    if ($webSiteByCustomer->last_update != null) {
+                        $lastUpdate = Carbon::parse($webSiteByCustomer->last_update);
+                    } else {
+                        $lastUpdate = Carbon::parse($webSiteByCustomer->date_creation);
+                    }
+
+                    $nextUpdate = $lastUpdate->copy()->addDays($webSiteByCustomer->update_period);
+                    $daysToUpdate = Carbon::now()->startOfDay()->diffInDays($nextUpdate);
+                    //Giorno limite, affinche possa vedere quando arrivera il prossimo aggiornamento
+                    if ($daysToUpdate <= 22) {
+                        //Quantita dei progetti ad aggionare
+                        $quantity++;
+                        $listQuantity[]=$daysToUpdate;
+                    }
+                }
+            }
+
+                //Proggetti ad aggiornare
+                $progUpdated = $customer->web_sites_count - $quantity;
+                $progToUpdate = $quantity;
+
+
+            $tableWebSiteByCustomer[] = [
+                "id" => $customer->id,
+                "name" => $customer->name,
+                "webSiteQuantity" => $customer->web_sites_count,
+                "progUpdated" => $progUpdated,
+                "progToUpdate" => $progToUpdate
+            ];
+        }
+        return $tableWebSiteByCustomer;
     }
 }

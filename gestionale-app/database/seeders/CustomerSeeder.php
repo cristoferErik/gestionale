@@ -42,13 +42,13 @@ class CustomerSeeder extends Seeder
             $webSites = WebSite::factory()
                 ->for($servers)
                 ->for($serviceUpdates)
-                ->count(5)
+                ->count(3)
                 ->create();
 
             $webSites->each(function ($webSite) {
                 $recordUpdates = RecordUpdate::factory()
                     ->for($webSite)
-                    ->count(10)
+                    ->count(1)
                     ->create();
                 $recordUpdates->each(function ($recordUpdate) {
                     Backup::factory()
