@@ -18,9 +18,10 @@ return new class extends Migration
             $table->float('costo')->nullable();
             $table->date('date_creation');
             $table->unsignedBigInteger('server_id');
-            $table->unsignedBigInteger('service_update_id');
+            
             $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
             
+            $table->unsignedBigInteger('service_update_id');
             $table->foreign('service_update_id')->references('id')->on('service_updates')->onDelete('cascade');
             $table->timestamps();
         });

@@ -27,7 +27,6 @@ class ServiceUpdateFactory extends Factory
             'date_end'=>Carbon::createFromFormat('Y-m-d','2025-01-25'),
             'status'=>$status,
             'costo'=>$this->faker->numberBetween(300,1200),
-            'service_grant_id'=>ServiceGrant::factory()
         ];
     }
 }

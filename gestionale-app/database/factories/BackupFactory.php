@@ -19,7 +19,6 @@ class BackupFactory extends Factory
     public function definition(): array
     {
         return [
-            'date_bk'=>$this->faker->dateTimeThisYear(),
             'record_update_id'=>RecordUpdate::factory()
         ];
     }

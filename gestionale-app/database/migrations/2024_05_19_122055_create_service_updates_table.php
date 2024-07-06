@@ -18,8 +18,6 @@ return new class extends Migration
             $table->date("date_end");
             $table->boolean('status');
             $table->float("costo");
-            $table->unsignedBigInteger('service_grant_id');
-            $table->foreign('service_grant_id')->references('id')->on('service_grants')->onDelete('cascade');
             $table->timestamps();
         });
     }

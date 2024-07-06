@@ -52,36 +52,16 @@ class CustomerRepository implements CrudRepositoryInterface
     {
         return Customer::all();
     }
-
-    public function getWebSiteByCustomer(Array $customersId)
-    {
+    public function getCustomerByWebSite($pagSize){
         $customers = DB::table('customers')
-            ->join('service_grants', 'customers.id', '=', 'service_grants.customer_id')
-            ->join('service_updates', 'service_grants.id', '=', 'service_updates.service_grant_id')
-            ->join('web_sites','web_sites.service_update_id','=','service_updates.id')
-            ->leftjoin('record_updates','record_updates.web_site_id','=','web_sites.id')
-            ->select(
-                'customers.id as customer_id', 
-                'service_updates.update_period',
-                'web_sites.date_creation',
-                DB::raw('MAX(record_updates.record_date) as last_update')
-                )
-            ->groupBy('customers.id','service_updates.id','web_sites.id')
-            ->whereIn('customers.id',$customersId)
-            ->get();
-        return $customers;
-    }
-    public function getListCustomerById(int $pagSize){
-        $customers = DB::table('customers')
-        ->join('service_grants', 'customers.id', '=', 'service_grants.customer_id')
-        ->join('service_updates', 'service_grants.id', '=', 'service_updates.service_grant_id')
-        ->join('web_sites','web_sites.service_update_id','=','service_updates.id')
+        ->join('service_grants','customers.id','service_grants.customer_id')
+        ->join('service_webs','service_grants.id','service_webs.service_grant_id')
+        ->join('servers','service_webs.id','servers.service_web_id')
+        ->join('web_sites','servers.id','web_sites.server_id')
         ->select(
-            'customers.id',
-            'customers.name',
-            DB::raw('COUNT(web_sites.id) as web_sites_count')
-            )
-        ->groupBy('customers.id')
+            'web_sites.id as webSiteId',
+        )
+        ->groupBy('web_sites.id')
         ->paginate($pagSize);
         return $customers;
     }

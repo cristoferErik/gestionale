@@ -20,7 +20,7 @@ class RecordUpdateFactory extends Factory
     public function definition(): array
     {
         return [
-            'record_date'=> Carbon::createFromFormat('Y-m-d','2024-05-22'),
+            'record_date'=> $this->faker->dateTimeThisYear(),
             'web_site_id'=> WebSite::factory()
         ];
     }

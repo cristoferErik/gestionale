@@ -18,7 +18,6 @@ class MaintenanceFactory extends Factory
     public function definition(): array
     {
         return [
-            'date_update'=>$this->faker->dateTimeThisYear(),
             'descrizione'=>$this->faker->dateTimeThisYear(),
             'record_update_id'=>RecordUpdate::factory()
         ];

@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(CustomerServiceInterface::class,CustomerService::class);
         $this->app->bind(ServiceGrantServiceInterface::class,ServiceGrantService::class);
-        $this->app->bind(HomeServiceInterface::class, HomeService::class);
+        
     }   
 
     /**

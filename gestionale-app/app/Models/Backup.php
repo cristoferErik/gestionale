@@ -10,10 +10,9 @@ class Backup extends Model
     use HasFactory;
 
     protected $fillable=[
-        'date_bk',
         'record_update_id'
     ];
-    public function RecordUpdate(){
+    public function recordUpdate(){
         return $this->belongsTo(RecordUpdate::class);
     }
 }

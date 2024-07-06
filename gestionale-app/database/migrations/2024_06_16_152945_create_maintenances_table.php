@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('date_update');
             $table->string('descrizione');
             $table->unsignedBigInteger('record_update_id');
-            $table->foreign('record_update_id')->references('id')->on('record_updates')->onDelete('cascade');
+            $table->foreign('record_update_id')->references('id')->on('record_updates')->onDelete('cascade')->unique();
             $table->timestamps();
         });
     }

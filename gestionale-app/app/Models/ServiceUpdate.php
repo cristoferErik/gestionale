@@ -16,11 +16,7 @@ class ServiceUpdate extends Model
         'date_end',
         'status',
         'costo',
-        'service_grant_id'
     ];
-    public function serviceGrant(){
-        return $this->belongsTo(ServiceGrant::class);
-    }
     public function webSite(){
         return $this->hasMany(WebSite::class);
     }

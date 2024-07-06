@@ -28,9 +28,7 @@ class CustomerSeeder extends Seeder
             $serviceGrants = ServiceGrant::factory()
                 ->for($customer)
                 ->create();
-            $serviceUpdates = ServiceUpdate::factory()
-                ->for($serviceGrants)
-                ->create();
+
             $serviceWebs = ServiceWeb::factory()
                 ->for($serviceGrants)
                 ->create();
@@ -41,22 +39,27 @@ class CustomerSeeder extends Seeder
 
             $webSites = WebSite::factory()
                 ->for($servers)
-                ->for($serviceUpdates)
-                ->count(3)
+                ->count(2)
                 ->create();
 
             $webSites->each(function ($webSite) {
+                $serviceUpdate = ServiceUpdate::factory()->create();
+                $webSite->service_update_id = $serviceUpdate->id;
+                $webSite->save();
                 $recordUpdates = RecordUpdate::factory()
                     ->for($webSite)
-                    ->count(1)
+                    ->count(3)
                     ->create();
-                $recordUpdates->each(function ($recordUpdate) {
-                    Backup::factory()
-                        ->for($recordUpdate)
-                        ->create();
-                    Maintenance::factory()
-                        ->for($recordUpdate)
-                        ->create();
+                $recordUpdates->each(function ($recordUpdate, $index) {
+                    if ($index < 1) {
+                        Backup::factory()
+                            ->for($recordUpdate)
+                            ->create();
+                    } else {
+                        Maintenance::factory()
+                            ->for($recordUpdate)
+                            ->create();
+                    }
                 });
             });
         });

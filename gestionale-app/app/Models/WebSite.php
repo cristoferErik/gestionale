@@ -17,11 +17,12 @@ class WebSite extends Model
         'server_id',
         'service_update_id'
     ];
+
     public function server(){
         return $this->belongsTo(Server::class);
     }
     public function recordUpdate(){
-        return $this->hasMany(RecordUpdate::class);
+        return $this->hasOne(RecordUpdate::class);
     }
     public function serviceUpdate(){
         return $this->belongsTo(ServiceUpdate::class);

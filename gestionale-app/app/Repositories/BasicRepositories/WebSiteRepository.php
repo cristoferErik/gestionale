@@ -42,19 +42,19 @@ use Illuminate\Support\Facades\DB;
         $a=collect();
         return WebSite::all();
     }
-
-    public function getRecordUpdateByWebSite($serviceUpdateId){
+    public function getWebSiteByServiceUpdate(array $webSiteIds){
         $webSites = DB::table('web_sites')
-        ->leftjoin('record_updates','record_updates.web_site_id','=','web_sites.id')
-        ->where('web_sites.service_update_id',$serviceUpdateId)
+        ->join('service_updates','service_updates.id','web_sites.service_update_id')
         ->select(
-            'web_sites.service_update_id',
-            'web_sites.date_creation',
-            DB::raw('MAX(record_updates.record_date) as last_date')
+            'web_sites.id as webSiteId',
+            'web_sites.date_creation as webDateCreation',
+            'service_updates.update_period as updatePeriod',
+            'service_updates.date_ini as updateDateIni',
+            'service_updates.date_end as updateDateEnd',
+            'service_updates.status as status'
         )
-        ->groupBy('web_sites.id')
+        ->whereIn('web_sites.id',$webSiteIds)
         ->get();
-
         return $webSites;
     }
  }

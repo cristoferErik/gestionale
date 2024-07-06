@@ -4,6 +4,7 @@ namespace App\Services\CustomerServices;
 
 use App\Models\Customer;
 use App\Repositories\BasicRepositories\CustomerRepository;
+use App\Repositories\BasicRepositories\RecordUpdateRepository;
 use App\Repositories\BasicRepositories\WebSiteRepository;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -14,12 +15,16 @@ class CustomerService implements CustomerServiceInterface
     //iniettiamo la dipendenza
     protected $customerRepository;
     protected $webSiteRepository;
+    protected $recordUpdateRepository;
+
     public function __construct(
         CustomerRepository $customerRepository,
-        WebSiteRepository $webSiteRepository
+        WebSiteRepository $webSiteRepository,
+        RecordUpdateRepository $recordUpdateRepository
     ) {
         $this->customerRepository = $customerRepository;
         $this->webSiteRepository = $webSiteRepository;
+        $this->recordUpdateRepository = $recordUpdateRepository;
     }
     public function getCustomer(int $id): ?Model
     {
@@ -44,50 +49,43 @@ class CustomerService implements CustomerServiceInterface
 
     public function getCustomerServiceWebs(int $pag)
     {
+        $webSitesIdByCustomers = $this->customerRepository->getCustomerByWebSite($pag);
+        $webSiteIds = $webSitesIdByCustomers->pluck('webSiteId')->toArray();
 
-        $pagCustomersId = $this->customerRepository->getListCustomerById($pag);
-        $customers = $pagCustomersId->items();
-        $listCustomerIds = $pagCustomersId->pluck('id')->all();
-        $webSiteByCustomers = $this->customerRepository->getWebSiteByCustomer($listCustomerIds);
+        $webSitesByServiceUpdates = $this->webSiteRepository->getWebSiteByServiceUpdate($webSiteIds);
+        $webSiteIdsByServiceUpdate=$webSitesByServiceUpdates->pluck('webSiteId')->toArray();
 
-        $tableWebSiteByCustomer = [];
-        $listQuantity = [];
-        // Aggiugiamo un list di Id affinche possiamo ottenere tutti i dati
-
-        foreach ($customers as $customer) {
-            $quantity = 0;
-            $progToUpdate=0;
-            $progUpdated=0;
-            foreach ($webSiteByCustomers as $webSiteByCustomer) {
-                if ($customer->id === $webSiteByCustomer->customer_id) {
-                    if ($webSiteByCustomer->last_update != null) {
-                        $lastUpdate = Carbon::parse($webSiteByCustomer->last_update);
-                    } else {
-                        $lastUpdate = Carbon::parse($webSiteByCustomer->date_creation);
-                    }
-
-                    $nextUpdate = $lastUpdate->copy()->addDays($webSiteByCustomer->update_period);
-                    $daysToUpdate = Carbon::now()->startOfDay()->diffInDays($nextUpdate);
-                    //Giorno limite, affinche possa vedere quando arrivera il prossimo aggiornamento
-                    if ($daysToUpdate <= 22) {
-                        //Quantita dei progetti ad aggionare
-                        $quantity++;
-                        $listQuantity[]=$daysToUpdate;
-                    }
+        $backupByWebSites = $this->recordUpdateRepository->getRecordUpdatesBackUpByWebSiteIds($webSiteIdsByServiceUpdate)->toArray();
+        $maintenanceByWebSites = $this->recordUpdateRepository->getRecordUpdatesMaintenanceByWebSiteIds($webSiteIdsByServiceUpdate);
+        $tableWebSiteByCustomer=[];
+        foreach($webSitesByServiceUpdates as $webSitesByServiceUpdate){
+            $lastDateBk=null;
+            $lastDateMtn=null;
+            foreach($backupByWebSites as $backupByWebSite){
+                if($webSitesByServiceUpdate->webSiteId===$backupByWebSite->webSiteId){
+                    $lastDateBk=$backupByWebSite->lastDateBk;
+                    break;
+                }else{
+                    $lastDateBk=null;
                 }
             }
-
-                //Proggetti ad aggiornare
-                $progUpdated = $customer->web_sites_count - $quantity;
-                $progToUpdate = $quantity;
-
-
-            $tableWebSiteByCustomer[] = [
-                "id" => $customer->id,
-                "name" => $customer->name,
-                "webSiteQuantity" => $customer->web_sites_count,
-                "progUpdated" => $progUpdated,
-                "progToUpdate" => $progToUpdate
+            foreach($maintenanceByWebSites as $maintenanceByWebSite){
+                if($webSitesByServiceUpdate->webSiteId===$maintenanceByWebSite->webSiteId){
+                    $lastDateMtn=$maintenanceByWebSite->lastDateMtn;
+                    break;
+                }else{
+                    $lastDateMtn=null;
+                }
+            }
+            $tableWebSiteByCustomer[]=[
+                "webSiteId"=>$webSitesByServiceUpdate->webSiteId,
+                "webDateCreation"=>$webSitesByServiceUpdate->webDateCreation,
+                "updatePeriod"=>$webSitesByServiceUpdate->updatePeriod,
+                "updateDateIni"=>$webSitesByServiceUpdate->updateDateIni,
+                "updateDateEnd"=>$webSitesByServiceUpdate->updateDateEnd,
+                "status"=>$webSitesByServiceUpdate->status,
+                "lastDateBk"=>$lastDateBk,
+                "lastDateMtn"=>$lastDateMtn
             ];
         }
         return $tableWebSiteByCustomer;

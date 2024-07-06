@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('backups', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('date_bk');
             $table->unsignedBigInteger('record_update_id');
-            $table->foreign('record_update_id')->references('id')->on('record_updates')->onDelete('cascade');
+            $table->foreign('record_update_id')->references('id')->on('record_updates')->onDelete('cascade')->unique();
             $table->timestamps();
         });
     }
