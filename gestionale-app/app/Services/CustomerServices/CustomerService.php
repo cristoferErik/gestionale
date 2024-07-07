@@ -49,45 +49,73 @@ class CustomerService implements CustomerServiceInterface
 
     public function getCustomerServiceWebs(int $pag)
     {
-        $webSitesIdByCustomers = $this->customerRepository->getCustomerByWebSite($pag);
-        $webSiteIds = $webSitesIdByCustomers->pluck('webSiteId')->toArray();
+        $customersCountWebSites = $this->customerRepository->getCustomerByCountWebSite($pag);
+        $customerIds = $customersCountWebSites->pluck('customerId')->toArray();
+        $customerByWebSites = $this->customerRepository->getCustomerByWebSite($customerIds);
 
-        $webSitesByServiceUpdates = $this->webSiteRepository->getWebSiteByServiceUpdate($webSiteIds);
-        $webSiteIdsByServiceUpdate=$webSitesByServiceUpdates->pluck('webSiteId')->toArray();
+        $tabellaWebSiteByCustomers = [];
 
-        $backupByWebSites = $this->recordUpdateRepository->getRecordUpdatesBackUpByWebSiteIds($webSiteIdsByServiceUpdate)->toArray();
-        $maintenanceByWebSites = $this->recordUpdateRepository->getRecordUpdatesMaintenanceByWebSiteIds($webSiteIdsByServiceUpdate);
-        $tableWebSiteByCustomer=[];
-        foreach($webSitesByServiceUpdates as $webSitesByServiceUpdate){
-            $lastDateBk=null;
-            $lastDateMtn=null;
-            foreach($backupByWebSites as $backupByWebSite){
-                if($webSitesByServiceUpdate->webSiteId===$backupByWebSite->webSiteId){
-                    $lastDateBk=$backupByWebSite->lastDateBk;
+        foreach ($customersCountWebSites as $customersCountWebSite) {
+            $customerIdCwS = $customersCountWebSite->customerId;
+            $customerNameCwS = $customersCountWebSite->customerName;
+            $customerCountCwS = $customersCountWebSite->webSiteQuantity;
+            $value=0;
+            foreach ($customerByWebSites as $key => $customerByWebSite) {
+                $customerIdBwS = $customerByWebSite->customerId;
+                $webDateCreationBwS = $customerByWebSite->webDateCreation;
+                $updateDateIniBwS = $customerByWebSite->updateDateIni;
+                $updateDateEndBwS = $customerByWebSite->updateDateEnd;
+                $updatePeriodBwS = $customerByWebSite->updatePeriod;
+                $lastDateBkBwS = $customerByWebSite->lastDateBk;
+                $lastDateMtnBwS = $customerByWebSite->lastDateMtn;
+
+                if ($customerIdCwS === $customerIdBwS) {
+                    unset($customerByWebSites[$key]);
+                    $list = [$lastDateBkBwS, $lastDateMtnBwS];
+                    $value = $value + $this->progToUpdate($list, $webDateCreationBwS, $updatePeriodBwS);
+                    
+                } else {
                     break;
-                }else{
-                    $lastDateBk=null;
                 }
             }
-            foreach($maintenanceByWebSites as $maintenanceByWebSite){
-                if($webSitesByServiceUpdate->webSiteId===$maintenanceByWebSite->webSiteId){
-                    $lastDateMtn=$maintenanceByWebSite->lastDateMtn;
-                    break;
-                }else{
-                    $lastDateMtn=null;
-                }
-            }
-            $tableWebSiteByCustomer[]=[
-                "webSiteId"=>$webSitesByServiceUpdate->webSiteId,
-                "webDateCreation"=>$webSitesByServiceUpdate->webDateCreation,
-                "updatePeriod"=>$webSitesByServiceUpdate->updatePeriod,
-                "updateDateIni"=>$webSitesByServiceUpdate->updateDateIni,
-                "updateDateEnd"=>$webSitesByServiceUpdate->updateDateEnd,
-                "status"=>$webSitesByServiceUpdate->status,
-                "lastDateBk"=>$lastDateBk,
-                "lastDateMtn"=>$lastDateMtn
+            $tabellaWebSiteByCustomers[] = [
+                'id' => $customerIdCwS,
+                'name' => $customerNameCwS,
+                'count' => $customerCountCwS,
+                'progToUpdate' => $value,
+                'progUpdated' => $customerCountCwS - $value
             ];
         }
-        return $tableWebSiteByCustomer;
+        return $tabellaWebSiteByCustomers;
+    }
+    public function progToUpdate($list, $webDateCreationBwS, $updatePeriod)
+    {
+        $flag=0;
+        $value=0;
+        for ($i = 0; $i < count($list); $i++) {
+            if($list[$i]!=null){
+                $value = $this->daysToUpdate($list[$i],$updatePeriod);
+                if($value==1){
+                    break;
+                }
+            }else{
+                $flag++;
+            }  
+        }
+        if($flag==2){
+            $value = $this->daysToUpdate($webDateCreationBwS,$updatePeriod);
+        }
+
+        return $value;
+    }
+    public function daysToUpdate($lastUpdate, $updatePeriod)
+    {
+        $nextUpdate = Carbon::parse($lastUpdate)->addDays($updatePeriod);
+        $daysToUpdate = Carbon::now()->startOfDay()->diffInDays($nextUpdate);
+        //echo "<br/>".$daysToUpdate;
+        if ($daysToUpdate <= 10) {
+            return 1;
+        }
+        return 0;
     }
 }

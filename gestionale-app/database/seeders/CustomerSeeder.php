@@ -21,7 +21,7 @@ class CustomerSeeder extends Seeder
     public function run(): void
     {
         $customers = Customer::factory()
-            ->count(2)
+            ->count(1000)
             ->create();
 
         $customers->each(function ($customer) {

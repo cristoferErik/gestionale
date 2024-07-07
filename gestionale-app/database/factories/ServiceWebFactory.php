@@ -19,7 +19,7 @@ class ServiceWebFactory extends Factory
     {
         return [
             'costo_totale'=>$this->faker->numberBetween(100,1000),
-            'service_grant_id'=>ServiceGrant::factory()
+            'id'=>ServiceGrant::factory()
         ];
     }
 }

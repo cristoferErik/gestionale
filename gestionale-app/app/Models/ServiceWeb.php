@@ -14,11 +14,11 @@ class ServiceWeb extends Model
     protected $fillable=
     [
         'costo_totale',
-        'service_grant_id'
+        'id'
     ];
 
     public function serviceGrant(){
-        return $this->belongsTo(ServiceGrant::class);
+        return $this->belongsTo(ServiceGrant::class,'id','id');
     }
     public function server(){
         return $this->hasMany(Server::class);

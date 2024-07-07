@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\BasicRepositories;
 
+
 use App\Models\WebSite;
 use App\Repositories\CrudRepositories\CrudRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -9,6 +10,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
  class WebSiteRepository implements CrudRepositoryInterface{
+
+    private $recordUpdateRepository;
+
+    public function __construct(RecordUpdateRepository $recordUpdateRepository){
+        $this->recordUpdateRepository = $recordUpdateRepository;
+    }
     public function findById(int $id):?Model{
         return WebSite::find($id);
     }
@@ -41,20 +48,5 @@ use Illuminate\Support\Facades\DB;
     public function getAll(): Collection{
         $a=collect();
         return WebSite::all();
-    }
-    public function getWebSiteByServiceUpdate(array $webSiteIds){
-        $webSites = DB::table('web_sites')
-        ->join('service_updates','service_updates.id','web_sites.service_update_id')
-        ->select(
-            'web_sites.id as webSiteId',
-            'web_sites.date_creation as webDateCreation',
-            'service_updates.update_period as updatePeriod',
-            'service_updates.date_ini as updateDateIni',
-            'service_updates.date_end as updateDateEnd',
-            'service_updates.status as status'
-        )
-        ->whereIn('web_sites.id',$webSiteIds)
-        ->get();
-        return $webSites;
     }
  }

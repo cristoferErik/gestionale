@@ -19,7 +19,7 @@ class MaintenanceFactory extends Factory
     {
         return [
             'descrizione'=>$this->faker->dateTimeThisYear(),
-            'record_update_id'=>RecordUpdate::factory()
+            'id'=>RecordUpdate::factory()
         ];
     }
 }

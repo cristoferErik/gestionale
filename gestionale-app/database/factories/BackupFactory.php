@@ -19,7 +19,7 @@ class BackupFactory extends Factory
     public function definition(): array
     {
         return [
-            'record_update_id'=>RecordUpdate::factory()
+            'id'=>RecordUpdate::factory()
         ];
     }
     
