@@ -29,7 +29,7 @@ $recordUpdates=DB::table("siti_webs")
 		DB::raw(MAX("backups.record_date) as recordDateBk)",
 		DB::raw(MAX("maintenances.record_date) as recordDateMtn)",
 	)
-	->where("siti_webs.id",$sitiWebId)
+	->whereIn("siti_webs.id",$sitiWebIds)
 	->get();
 	
   $list[];
