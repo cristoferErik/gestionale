@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('backups', function (Blueprint $table) {
             $table->id();
-            $table->foreign('id')->references('id')->on('record_updates')->onDelete('cascade')->unique();
+            $table->foreign('id')->references('id')->on('record_updates')->onDelete('cascade');
             $table->timestamps();
         });
     }

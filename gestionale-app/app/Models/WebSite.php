@@ -14,6 +14,7 @@ class WebSite extends Model
         'url',
         'costo',
         'date_creation',
+        'next_update',
         'server_id',
         'service_update_id'
     ];
@@ -22,7 +23,7 @@ class WebSite extends Model
         return $this->belongsTo(Server::class);
     }
     public function recordUpdate(){
-        return $this->hasOne(RecordUpdate::class);
+        return $this->hasMany(RecordUpdate::class);
     }
     public function serviceUpdate(){
         return $this->belongsTo(ServiceUpdate::class);

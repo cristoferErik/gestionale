@@ -20,7 +20,7 @@ class RecordUpdateFactory extends Factory
     public function definition(): array
     {
         return [
-            'record_date'=> $this->faker->dateTimeThisYear(),
+            'last_update'=> $this->faker->dateTimeThisYear(),
             'web_site_id'=> WebSite::factory()
         ];
     }

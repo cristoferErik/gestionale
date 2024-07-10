@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Maintenance;
 use App\Models\RecordUpdate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +20,7 @@ class MaintenanceFactory extends Factory
     {
         return [
             'descrizione'=>$this->faker->dateTimeThisYear(),
-            'id'=>RecordUpdate::factory()
+            'id'=>RecordUpdate::factory(),
         ];
     }
 }

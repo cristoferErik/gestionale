@@ -23,6 +23,7 @@ class WebSiteFactory extends Factory
             'url'=>$this->faker->url(),
             'costo'=>$this->faker->numberBetween(100,600),
             'date_creation'=>$this->faker->dateTimeThisYear(),
+            'next_update'=>$this->faker->dateTimeThisYear(),
             'server_id'=>Server::factory(),
             'service_update_id'=>ServiceUpdate::factory()
         ];

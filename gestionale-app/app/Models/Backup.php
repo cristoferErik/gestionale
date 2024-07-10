@@ -13,6 +13,6 @@ class Backup extends Model
         'id'
     ];
     public function recordUpdate(){
-        return $this->belongsTo(RecordUpdate::class,'id','id');
+        return $this->belongsTo(RecordUpdate::class,'id','record_update_id');
     }
 }

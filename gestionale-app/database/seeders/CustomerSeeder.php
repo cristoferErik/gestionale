@@ -21,7 +21,7 @@ class CustomerSeeder extends Seeder
     public function run(): void
     {
         $customers = Customer::factory()
-            ->count(1000)
+            ->count(2)
             ->create();
 
         $customers->each(function ($customer) {
@@ -48,7 +48,7 @@ class CustomerSeeder extends Seeder
                 $webSite->save();
                 $recordUpdates = RecordUpdate::factory()
                     ->for($webSite)
-                    ->count(3)
+                    ->count(2)
                     ->create();
                 $recordUpdates->each(function ($recordUpdate, $index) {
                     if ($index < 1) {

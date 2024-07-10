@@ -1,42 +1,25 @@
 <?php
+
 namespace App\Repositories\BasicRepositories;
 
-use App\Models\ServiceGrant;
-use App\Repositories\CrudRepositories\CrudRepositoryInterface;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
-class ServiceGrantRepository implements CrudRepositoryInterface{
-    public function findById(int $id):?Model{
-        return ServiceGrant::find($id);
-    }
-    public function getPaginated(int $pagSize): LengthAwarePaginator{
-        $query = ServiceGrant::query();
-        return $query->paginate($pagSize);
-    }
-    public function create(array $data):?Model{
-        return ServiceGrant::create($data);
-    }
-    public function insert(array $data):bool{
-        return ServiceGrant::insert($data);
-    }
-    public function update(array $data,int $id): bool{
-        $service=$this->findById($id);
-        if($service->update($data)){
-            return true;
-        }
-        return false;
-    }
-    public function delete(int $id):bool{
-        $service=$this->findById($id);
-        if($service){//si es null, ovvero se service no essiste
-            $service->delete();
-            return true;
-        }
-        return false;
-    }   
-    public function getAll(): Collection{
-        return ServiceGrant::all();
+use Illuminate\Support\Facades\DB;
+
+class ServiceGrantRepository
+{
+
+    public function getServiceGrantByCustomerId($customerId, $pag)
+    {
+        $service = DB::table('service_grants')
+        ->join('service_webs','service_webs.id','service_grants.id')
+            ->select(
+                'service_grants.id as serviceId',
+                'service_grants.descrizione as descrizione',
+                'service_grants.data_service as dataService'
+                
+            )
+            ->where('service_grants.customer_id', $customerId)
+            ->paginate($pag);
+        return $service;
     }
 }

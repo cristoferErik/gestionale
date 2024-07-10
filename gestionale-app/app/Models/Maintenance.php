@@ -11,10 +11,10 @@ class Maintenance extends Model
 
     protected $fillable=[
         'descrizione',
-        'id',
+        'id'
     ];
 
     public function recordUpdate(){
-        return $this->belongsTo(RecordUpdate::class,'id','id');
+        return $this->belongsTo(RecordUpdate::class,'id','record_update_id');
     }
 }

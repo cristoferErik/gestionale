@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Backup;
 use App\Models\RecordUpdate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +20,7 @@ class BackupFactory extends Factory
     public function definition(): array
     {
         return [
-            'id'=>RecordUpdate::factory()
+            'id'=>RecordUpdate::factory(),
         ];
     }
     

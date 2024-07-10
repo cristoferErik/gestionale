@@ -15,7 +15,6 @@ class ServiceUpdate extends Model
         'date_ini',
         'date_end',
         'status',
-        'costo',
     ];
     public function webSite(){
         return $this->hasMany(WebSite::class);

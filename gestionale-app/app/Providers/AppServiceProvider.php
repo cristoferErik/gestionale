@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CrudRepositoryInterface::class, ServiceGrantRepository::class);
 
         $this->app->bind(CustomerServiceInterface::class,CustomerService::class);
-        $this->app->bind(ServiceGrantServiceInterface::class,ServiceGrantService::class);
+    
         
     }   
 

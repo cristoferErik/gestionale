@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->float('costo')->nullable();
             $table->date('date_creation');
+            $table->date('next_update');
             $table->unsignedBigInteger('server_id');
             
             $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');

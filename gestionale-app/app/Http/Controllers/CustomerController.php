@@ -47,7 +47,5 @@ class CustomerController extends Controller
         $this->customerService->deleteCustomer($id);   
     }
 
-    public function getServicesUpdateByCustomer($pag){
-        return $this->customerService->getCustomerServiceWebs($pag);
-    }
+    
 }

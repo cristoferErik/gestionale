@@ -74,37 +74,4 @@ class CustomerRepository implements CrudRepositoryInterface
         ->paginate($pag);
         return $customers;
     }
-    public function getCustomerByWebSite($customerIds){
-        $bkByWebSiteIds=$this->recordUpdateRepository->getRecordUpdatesBkByWebSiteIds();
-        $mntByWebSiteIds=$this->recordUpdateRepository->getRecordUpdatesMntByWebSiteIds();
-        $customers = DB::table('customers')
-        ->join('service_grants','customers.id','service_grants.customer_id')
-        ->join('service_webs','service_grants.id','service_webs.id')
-        ->join('servers','service_webs.id','servers.service_web_id')
-        ->join('web_sites','servers.id','web_sites.server_id')
-        ->join('service_updates','service_updates.id','web_sites.service_update_id')
-        ->leftjoinSub($bkByWebSiteIds,'backups',function($join){
-            $join->on('backups.webSiteId','web_sites.id');
-        })
-        ->leftjoinSub($mntByWebSiteIds,'maintenances',function($join){
-            $join->on('maintenances.webSiteId','web_sites.id');
-        })
-        ->select(
-            'customers.id as customerId',
-            'web_sites.id as webSiteId',
-            'web_sites.date_creation as webDateCreation',
-            'service_updates.update_period as updatePeriod',
-            'service_updates.date_ini as updateDateIni',
-            'service_updates.date_end as updateDateEnd',
-            'service_updates.status as status',
-            'backups.lastDateBk',
-            'maintenances.lastDateMtn'
-        )
-        ->groupBy('web_sites.id')
-        ->whereIn('customers.id',$customerIds)
-        ->get();
-
-        return $customers;
-    }
-
 }
