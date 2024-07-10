@@ -1,0 +1,53 @@
+
+$WebSiteByUpdateService=DB::table("customers")
+	->join("service_grants","customers.id","service_grants.customer_id")
+	->join("service_webs","service_webs.id","service_grants_id")
+	->join("servers","servers.service_web_id","service_webs.id")
+	->join("siti_webs","siti_webs.server_id","servers.id")
+	->join("service_updates","service_updates.siti_web_id","service_updates.id")
+	->select(
+		"customers.id as customerId",
+		"siti_webs.id as sitiWebId",
+		"siti_webs.next_aggiornamento as nextAggiornamento",
+		"service_updates.period_aggiornamento as periodoAggiornamento",
+		"data_ini as dataIni",
+		"data_end as dataEnd"
+		)
+	->groupBy("siti_webs.id")
+	->whereIn("customers.id",$customerIds)
+	->get();
+//Ogni volta che facciamo un aggiornamento, dobbiamo chiamare questa funzione
+//per verificare se il sito web ha il backup e il maintenances aggiornato
+
+$recordUpdates=DB::table("siti_webs")
+	->join("record_updates","record_updates.siti_web_id","siti_webs.id")
+	->leftjoin("backups","backups.record_update_id","record_updates.id")
+	->leftjoin("maintenances","maintenances.record_update_id","record_updates.id")
+	->select(
+		siti_webs.id as sitiWebId",
+		siti_webs.data_creation as dataCreation",
+		DB::raw(MAX("backups.record_date) as recordDateBk)",
+		DB::raw(MAX("maintenances.record_date) as recordDateMtn)",
+	)
+	->whereIn("siti_webs.id",$sitiWebIds)
+	->get();
+	
+  $list[];
+	$listBM[]=["B","M"];
+	$tuple=[];
+	$listTuple=[];
+	$count=0;
+	if($recordDateBk==null && $recordDateMtn==null){
+		$list[]=[dataCreation];
+	}else{
+		$list[]=[recordDateBk,recordDateMtn];
+	}
+	for($i=0;$i<Count($list);$i++){
+		$delayDays=Carbon::now()->diffdays(Carbon::parse(recordDateBk));
+		if($delayDays<10){
+			$tuple[]=$listBM[i];
+		}
+	}
+	
+	
+	
