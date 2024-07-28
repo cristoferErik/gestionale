@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('record_updates', function (Blueprint $table) {
             $table->id();
-            $table->date('last_update');
+            $table->date('date_record_update');
+            $table->string('type_record_update');
+            $table->string('description');
+            $table->date('next_update');
+            
             $table->unsignedBigInteger('web_site_id');
             $table->foreign('web_site_id')->references('id')->on('web_sites')->onDelete('cascade');
             $table->timestamps();

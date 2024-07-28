@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_webs', function (Blueprint $table) {
-
+        Schema::create('service_updates', function (Blueprint $table) {
             $table->id();
-            /*foreign key*/
-            $table->float('costo_totale');
-            $table->foreign('id')->references('id')->on('service_grants')->onDelete('cascade');
+            $table->integer('periodo_aggiornamento');
+            $table->date('data_iniziale');
+            $table->date('data_finale');
+            $table->boolean('state')->default(true);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_webs');
+        Schema::dropIfExists('service_updates');
     }
 };

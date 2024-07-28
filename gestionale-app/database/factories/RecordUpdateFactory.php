@@ -19,8 +19,13 @@ class RecordUpdateFactory extends Factory
      */
     public function definition(): array
     {
+        $flag=$this->faker->randomElement(["B","M"]);
+        
         return [
-            'last_update'=> $this->faker->dateTimeThisYear(),
+            'date_record_update'=> $this->faker->date(),
+            'type_record_update'=>$flag,
+            'description'=>$this->faker->paragraph(),
+            'next_update'=>$this->faker->date(),
             'web_site_id'=> WebSite::factory()
         ];
     }

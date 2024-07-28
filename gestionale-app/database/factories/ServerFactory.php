@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Customer;
 use App\Models\ServiceWeb;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,7 @@ class ServerFactory extends Factory
             'panello_url'=>$this->faker->url(),
             'utente'=>$this->faker->userName(),
             'password'=>$this->faker->password(),
-            'service_web_id'=>ServiceWeb::factory()
+            'customer_id'=>Customer::factory()
         ];
     }
 }

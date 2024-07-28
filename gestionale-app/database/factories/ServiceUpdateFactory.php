@@ -2,13 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\ServiceGrant;
-use App\Models\ServiceWeb;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ServiceUpdate>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
 class ServiceUpdateFactory extends Factory
 {
@@ -17,15 +14,13 @@ class ServiceUpdateFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     public function definition(): array
     {
-        $status=$this->faker->randomElement([true,false]);
         return [
-            'update_period'=>30,
-            'date_ini'=> Carbon::createFromFormat('Y-m-d','2024-01-25'),
-            'date_end'=>Carbon::createFromFormat('Y-m-d','2025-01-25'),
-            'status'=>$status,
+            'periodo_aggiornamento'=>30,
+            'data_iniziale'=>'2024-07-10',
+            'data_finale'=>$this->faker->dateTimeBetween("2024-09-15","2025-07-28")
+            //'state';
         ];
     }
 }

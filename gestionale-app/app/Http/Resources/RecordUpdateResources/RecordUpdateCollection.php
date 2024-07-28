@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\GrantServiceResources;
+namespace App\Http\Resources\RecordUpdateResources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ServiceGrantCollection extends ResourceCollection
+class RecordUpdateCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

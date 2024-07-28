@@ -1,15 +1,19 @@
 <?php
-namespace App\Services\webSiteServices;
+namespace App\Services\WebSiteServices;
 use App\Repositories\BasicRepositories\WebSiteRepository;
 
-class webSiteService{
+class WebSiteService{
     private $webSiteRepository;
     public function __construct(WebSiteRepository $webSiteRepository)
     {
         $this->webSiteRepository=$webSiteRepository;
     }
-    public function getWebSiteByNextUpdate($pag){
-        $webSiteByServiceUpdates = $this->webSiteRepository->getWebSiteByNextUpdate($pag);
-        return $webSiteByServiceUpdates;
+    public function getWebSiteToUpdateByMaintenances($pag){
+        $webSiteToUpdate = $this->webSiteRepository->getSiteWebToUpdate($pag,"M");
+        return $webSiteToUpdate;
+    }
+    public function getWebSiteToUpdateByBackup($pag){
+        $webSiteToUpdate = $this->webSiteRepository->getSiteWebToUpdate($pag,"B");
+        return $webSiteToUpdate;
     }
 }

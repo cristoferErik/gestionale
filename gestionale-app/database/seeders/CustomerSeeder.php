@@ -25,42 +25,20 @@ class CustomerSeeder extends Seeder
             ->create();
 
         $customers->each(function ($customer) {
-            $serviceGrants = ServiceGrant::factory()
-                ->for($customer)
-                ->create();
-
-            $serviceWebs = ServiceWeb::factory()
-                ->for($serviceGrants)
-                ->create();
-
             $servers = Server::factory()
-                ->for($serviceWebs)
+                ->for($customer)
                 ->create();
 
             $webSites = WebSite::factory()
                 ->for($servers)
                 ->count(2)
                 ->create();
-
+            
             $webSites->each(function ($webSite) {
-                $serviceUpdate = ServiceUpdate::factory()->create();
-                $webSite->service_update_id = $serviceUpdate->id;
-                $webSite->save();
-                $recordUpdates = RecordUpdate::factory()
+                RecordUpdate::factory()
                     ->for($webSite)
                     ->count(2)
                     ->create();
-                $recordUpdates->each(function ($recordUpdate, $index) {
-                    if ($index < 1) {
-                        Backup::factory()
-                            ->for($recordUpdate)
-                            ->create();
-                    } else {
-                        Maintenance::factory()
-                            ->for($recordUpdate)
-                            ->create();
-                    }
-                });
             });
         });
     }

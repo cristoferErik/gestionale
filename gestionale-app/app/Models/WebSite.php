@@ -16,17 +16,12 @@ class WebSite extends Model
         'date_creation',
         'next_update',
         'server_id',
-        'service_update_id'
+        'service_update',
     ];
-
     public function server(){
         return $this->belongsTo(Server::class);
     }
     public function recordUpdate(){
         return $this->hasMany(RecordUpdate::class);
     }
-    public function serviceUpdate(){
-        return $this->belongsTo(ServiceUpdate::class);
-    }
-    
 }

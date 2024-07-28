@@ -8,11 +8,9 @@ use Illuminate\Support\Collection;
 
 interface CrudRepositoryInterface
 {
-    public function findById(int $id):?Model;
-    public function getPaginated(int $pagSize): ?LengthAwarePaginator;
-    public function create(array $data):?Model;
-    public function insert(array $data):bool;
-    public function update(array $data,int $id): bool;
-    public function delete(int $id):bool;
-    public function getAll(): Collection;
+    public function findById(int $id);
+    public function getPaginated(int $pagSize);
+    public function create(array $data);
+    public function update(array $data,int $id);
+    public function delete(int $id);
 }

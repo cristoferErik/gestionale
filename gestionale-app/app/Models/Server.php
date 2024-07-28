@@ -15,11 +15,11 @@ class Server extends Model
         'panello_url',
         'utente',
         'password',
-        'service_web_id'
+        'customer_id'
     ];
     
-    public function serviceWeb(){
-        return $this->belongsTo(ServiceWeb::class);
+    public function customer(){
+        return $this->belongsTo(Customer::class);
     }
     public function webSite(){
         return $this->hasMany(WebSite::class);

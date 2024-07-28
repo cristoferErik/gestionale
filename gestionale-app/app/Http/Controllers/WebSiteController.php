@@ -8,12 +8,15 @@ use Illuminate\Http\Request;
 
 class WebSiteController extends Controller
 {
-    public $webSiteRepository;
-    public function __construct(webSiteService $webSiteRepository)
+    public $webSiteService;
+    public function __construct(webSiteService $webSiteService)
     {
-        $this->webSiteRepository=$webSiteRepository;
+        $this->webSiteService=$webSiteService;
     }
-    public function getWebSiteByNextUpdate($pag){
-        return $this->webSiteRepository->getWebSiteByNextUpdate($pag);
+    public function webSiteToUpdateByMaintenance($pag){
+        return $this->webSiteService->getWebSiteToUpdateByMaintenances($pag);
+    }
+    public function webSiteToUpdateByBackup($pag){
+        return $this->webSiteService->getWebSiteToUpdateByBackup($pag);
     }
 }

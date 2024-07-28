@@ -8,16 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class RecordUpdate extends Model
 {
     use HasFactory;
-    protected $fillable=['web_site_id','last_update'];
+    protected $fillable=[
+        'date_record_update',
+        'type_record_update',
+        'description',
+        'next_update',
+        'web_site_id'
+    ];
 
-    public function backup(){
-        return $this->hasOne(Backup::class,'id');
-    }
-    public function maintenance(){
-        return $this->hasOne(Maintenance::class,'id');
-    }
     public function webSite(){
         return $this->belongsTo(WebSite::class);
     }
-    
 }

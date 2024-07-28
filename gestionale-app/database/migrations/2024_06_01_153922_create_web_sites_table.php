@@ -17,12 +17,10 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->float('costo')->nullable();
             $table->date('date_creation');
-            $table->date('next_update');
+            $table->boolean('service_update');
             $table->unsignedBigInteger('server_id');
-            
-            $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
-            
             $table->unsignedBigInteger('service_update_id');
+            $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
             $table->foreign('service_update_id')->references('id')->on('service_updates')->onDelete('cascade');
             $table->timestamps();
         });

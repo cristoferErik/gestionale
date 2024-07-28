@@ -9,15 +9,10 @@ class ServiceUpdate extends Model
 {
     use HasFactory;
 
-    protected $fillable = 
-    [
-        'update_period',
-        'date_ini',
-        'date_end',
-        'status',
+    protected $fillable=[
+        'periodo_aggiornamento',
+        'data_iniziale',
+        'data_finale',
+        'state',
     ];
-    public function webSite(){
-        return $this->hasMany(WebSite::class);
-    }
-    
 }

@@ -2,44 +2,42 @@
 
 namespace App\Repositories\BasicRepositories;
 
+use App\Http\Resources\RecordUpdateResources\RecordUpdateResource;
+use App\Models\RecordUpdate;
+use App\Repositories\CrudRepositories\CrudRepositoryInterface;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
-class RecordUpdateRepository
+class RecordUpdateRepository implements CrudRepositoryInterface
 {
-    public function getRecordUpdatesBkByWebSiteIds()
-    {
-        $recordUpdatesSubQuery = DB::table('record_updates')
-            ->join('backups', 'backups.id', '=', 'record_updates.id')
-            ->select(
-                'record_updates.web_site_id as webSiteId',
-                'record_updates.last_update as lastDateBk',
-                'record_updates.next_update as nextUpdate'
-            )
-            ->orderBy('record_updates.last_update', 'desc') // Ordena por last_update de forma descendente
-            ->groupBy('record_updates.web_site_id');
-
-        return $recordUpdatesSubQuery;
+    public function findById(int $id){
+        return RecordUpdate::find($id);
     }
-    public function getRecordUpdatesMntByWebSiteIds()
-    {
-        $recordUpdatesSubQuery = DB::table('record_updates')
-            ->join('maintenances', 'maintenances.id', '=', 'record_updates.id')
-            ->select(
-                'record_updates.web_site_id as webSiteId',
-                'MAX(record_updates.last_update as lastDateBk',
-                'record_updates.next_update as nextUpdate'
-            )
-            ->groupBy('record_updates.web_site_id');
-
-        $recordUpdatesSubQuery = DB::table('record_updates')
-            ->join('maintenances', 'maintenances.id', '=', 'record_updates.id')
-            ->select(
-                'record_updates.web_site_id as webSiteId',
-                'MAX(record_updates.last_update as lastDateMtn',
-                'record_updates.next_update as nextUpdate'
-            )
-            ->groupBy('record_updates.web_site_id');
-
-        return $recordUpdatesSubQuery;
+    public function getPaginated(int $pagSize){
+        return null;
+    }
+    public function create(array $model){
+        try{
+            return new RecordUpdateResource(RecordUpdate::create($model));
+        }catch(Exception $e){
+            // Lanzar una excepción si no se puede crear el modelo
+            throw new Exception('Error creating record update', 0, $e);
+        }
+    }
+    public function update(array $model,int $id){
+        return false;
+    }
+    public function delete(int $id){
+        return false;
+    }
+    //Ricordare che debbiamo di modificare il tipo di data, di recordUpdate
+    //poiche si puo aggiornare molte volte nello stesso giorno
+    //e questo ci permetera ,non avere dati repetitivi
+    public function getRecourdUpdateByType(string $type){
+        $maxDate=DB::table('record_updates')
+        ->select('web_site_id',DB::raw('MAX(next_update) as next_update'))
+        ->where('type_record_update',$type)
+        ->groupBy('web_site_id');
+        return $maxDate;
     }
 }

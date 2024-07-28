@@ -19,24 +19,20 @@ class WebSiteRepository implements CrudRepositoryInterface
     {
         $this->recordUpdateRepository = $recordUpdateRepository;
     }
-    public function findById(int $id): ?Model
+    public function findById(int $id)
     {
         return WebSite::find($id);
     }
-    public function getPaginated(int $pagSize): LengthAwarePaginator
+    public function getPaginated(int $pagSize)
     {
         $query = WebSite::query();
         return $query->paginate($pagSize);
     }
-    public function create(array $data): ?Model
+    public function create(array $data)
     {
         return WebSite::create($data);
     }
-    public function insert(array $data): bool
-    {
-        return WebSite::insert($data);
-    }
-    public function update(array $data, int $id): bool
+    public function update(array $data, int $id)
     {
         $sitiWeb = $this->findById($id);
         if ($sitiWeb->update($data)) {
@@ -44,7 +40,7 @@ class WebSiteRepository implements CrudRepositoryInterface
         }
         return false;
     }
-    public function delete(int $id): bool
+    public function delete(int $id)
     {
         $service = $this->findById($id);
         if ($service) { //si es null, ovvero se service no essiste
@@ -58,18 +54,26 @@ class WebSiteRepository implements CrudRepositoryInterface
         $a = collect();
         return WebSite::all();
     }
-    public function getWebSiteByNextUpdate($pag)
+    public function getSiteWebToUpdate($pag,$type)
     {
-        $webSites = DB::table('web_sites')
+        $maxDate=$this->recordUpdateRepository->getRecourdUpdateByType($type);
+        $siteWeb = DB::table('web_sites')
+            ->join('record_updates','record_updates.web_site_id','web_sites.id')
+            ->join('service_updates','service_updates.id','web_sites.service_update_id')
+            ->joinSub($maxDate,'max_dates',function($join){
+                $join->on('record_updates.web_site_id','=','max_dates.web_site_id')
+                     ->on('record_updates.next_update', '=', 'max_dates.next_update');
+            })
             ->select(
-                'web_sites.id as webSiteId',
-                'web_sites.nome as webSiteName',
-                'web_sites.date_creation as dateCreation',
-                'web_sites.next_update as nextUpdate',
-            )
-            ->orderBy('nextUpdate', 'asc')
+                'web_sites.nome as nomeWebSite',
+                'record_updates.date_record_update as dateRecordUpdate',
+                'record_updates.description',
+                'record_updates.next_update as nextUpdate'
+                )
+            ->where('type_record_update',$type)
+            ->where('service_updates.state',true)
             ->paginate($pag);
 
-        return $webSites;
+        return $siteWeb;
     }
 }
